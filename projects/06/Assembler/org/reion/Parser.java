@@ -111,14 +111,14 @@ public class Parser {
 				if (curStr.startsWith(COMMENT_TAG) || curStr.trim().length() < 1) {
 					continue;
 				}
+				if (curStr.indexOf(COMMENT_TAG) > 0) {
+					curStr = curStr.substring(0, curStr.indexOf(COMMENT_TAG)).trim();
+				}
 				curStr = curStr.trim();
 				if (curStr.startsWith(L_BEGIN_TAG) && curStr.endsWith(L_END_TAG)) {
 					symTable.addEntry(curStr.substring(curStr.indexOf(L_BEGIN_TAG)+1,
 							curStr.indexOf(L_END_TAG)).trim(), lineNum+1);
 					continue;
-				}
-				if (curStr.indexOf(COMMENT_TAG) > 0) {
-					curStr = curStr.substring(0, curStr.indexOf(COMMENT_TAG)).trim();
 				}
 				insSeqs.put(++lineNum, curStr);
 			}
