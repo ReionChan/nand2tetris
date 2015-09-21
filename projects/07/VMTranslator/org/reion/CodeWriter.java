@@ -33,9 +33,11 @@ public class CodeWriter {
 	public static final String LINE_SEPARATOR = System
 			.getProperty("line.separator");
 	// 标签格式模板1
-	public static final String LABEL_PATTEN1 = "{0}.{1}";
+	public static final String LABEL_PATTEN1 = "{0}${1}";
 	// 标签格式模板2
-	public static final String LABEL_PATTEN2 = "{0}.{1}.{2}";
+	public static final String LABEL_PATTEN2 = "{0}.{1}";
+	// 标签格式模板3
+	public static final String LABEL_PATTEN3 = "{0}.{1}.{2}";
 	// L指令开始标签
 	public static final String L_BEGIN_TAG = "(";
 	// L指令结束标签
@@ -46,13 +48,15 @@ public class CodeWriter {
 	public static final String COMMENT_TAG = "//";
 
 	// 文件路径
-	private String filePath = null;
+	private String filePath;
 	// 输出的ASM文件名
-	private String asmName = null;
+	private String asmName;
 	// 文件写入器
-	private FileWriter fWriter = null;
+	private FileWriter fWriter;
 	// 标签区别序列
 	private static int seq = -1;
+	// 当前正在翻译的VM文件名
+	private String curVMFileName;
 
 	/**
 	 * 设置汇编文件的名称
@@ -97,10 +101,12 @@ public class CodeWriter {
 				writeComment("	GEN TIME: "
 						+ SimpleDateFormat.getInstance().format(new Date())
 						+ LINE_SEPARATOR + LINE_SEPARATOR);
+				writeInit();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		curVMFileName = filename;
 	}
 
 	/**
@@ -145,11 +151,11 @@ public class CodeWriter {
 				|| "lt".equalsIgnoreCase(command)) {
 
 			++seq;
-			lab1 = MessageFormat.format(LABEL_PATTEN2, new Object[] { "COMP",
+			lab1 = MessageFormat.format(LABEL_PATTEN3, new Object[] { "COMP",
 					seq, "TRUE" });
-			lab2 = MessageFormat.format(LABEL_PATTEN2, new Object[] { "COMP",
+			lab2 = MessageFormat.format(LABEL_PATTEN3, new Object[] { "COMP",
 					seq, "FALSE" });
-			lab3 = MessageFormat.format(LABEL_PATTEN2, new Object[] { "COMP",
+			lab3 = MessageFormat.format(LABEL_PATTEN3, new Object[] { "COMP",
 					seq, "END" });
 
 			strB.append(A_TAG).append(SP).append(LINE_SEPARATOR)
@@ -180,16 +186,16 @@ public class CodeWriter {
 		} else if ("neg".equalsIgnoreCase(command)
 				|| "not".equalsIgnoreCase(command)) {
 			strB.append(A_TAG).append(SP).append(LINE_SEPARATOR)
-					.append("AM=M-1").append(LINE_SEPARATOR).append("[wildcard]")
-					.append(LINE_SEPARATOR).append(A_TAG).append(SP)
-					.append(LINE_SEPARATOR).append("M=M+1")
+					.append("AM=M-1").append(LINE_SEPARATOR)
+					.append("[wildcard]").append(LINE_SEPARATOR).append(A_TAG)
+					.append(SP).append(LINE_SEPARATOR).append("M=M+1")
 					.append(LINE_SEPARATOR);
 
 		}
 		result = strB.toString();
 
 		// { "add", "sub", "neg", "eq", "gt", "lt", "and", "or", "not" }
-		switch (Arrays.asList(Parser.SET_ARI_LOG).indexOf(command)) {
+		switch (Arrays.asList(Parser.TYPE_ARI_LOG).indexOf(command)) {
 		case 0:
 			result = result.replace("[wildcard]", "M=D+M");
 			break;
@@ -236,9 +242,8 @@ public class CodeWriter {
 	public void writePushPop(final String command, final String segment,
 			final int index) {
 		StringBuffer strB = new StringBuffer();
-		String lab1, lab2;
 
-		if (Parser.SET_PUSH.equalsIgnoreCase(command)) {
+		if (Parser.TYPE_PUSH.equalsIgnoreCase(command)) {
 			if (segment.equalsIgnoreCase("constant")) {
 				strB.append(A_TAG).append(index).append(LINE_SEPARATOR)
 						.append("D=A").append(LINE_SEPARATOR).append(A_TAG)
@@ -254,67 +259,47 @@ public class CodeWriter {
 					|| segment.equalsIgnoreCase("this")
 					|| segment.equalsIgnoreCase("that")) {
 
-				String seg, lab;
+				String seg;
 				if (segment.equalsIgnoreCase("local")) {
 					seg = SEGMENT_LCL;
-					lab = "PUSH_LCL";
 				} else if (segment.equalsIgnoreCase("argument")) {
 					seg = SEGMENT_ARG;
-					lab = "PUSH_ARG";
 				} else if (segment.equalsIgnoreCase("this")) {
 					seg = SEGMENT_THIS;
-					lab = "PUSH_THIS";
 				} else {
 					seg = SEGMENT_THAT;
-					lab = "PUSH_THAT";
 				}
 
-				++seq;
-				lab1 = MessageFormat.format(LABEL_PATTEN2, new Object[] { lab,
-						seq, "LOOP" });
-				lab2 = MessageFormat.format(LABEL_PATTEN2, new Object[] { lab,
-						seq, "END" });
-
-				strB.append(A_TAG).append(seg).append(LINE_SEPARATOR)
-						.append("D=M").append(LINE_SEPARATOR).append(A_TAG)
-						.append("R13").append(LINE_SEPARATOR).append("M=D")
-						.append(LINE_SEPARATOR).append(A_TAG).append(index)
-						.append(LINE_SEPARATOR).append("D=A")
-						.append(LINE_SEPARATOR).append(L_BEGIN_TAG)
-						.append(lab1).append(L_END_TAG).append(LINE_SEPARATOR)
-						.append("D=D-1").append(LINE_SEPARATOR).append(A_TAG)
-						.append(lab2).append(LINE_SEPARATOR).append("D;JLT")
-						.append(LINE_SEPARATOR).append(A_TAG).append("R13")
-						.append(LINE_SEPARATOR).append("M=M+1")
-						.append(LINE_SEPARATOR).append(A_TAG).append(lab1)
-						.append(LINE_SEPARATOR).append("D;JGE")
-						.append(LINE_SEPARATOR).append(L_BEGIN_TAG)
-						.append(lab2).append(L_END_TAG).append(LINE_SEPARATOR)
-						.append(A_TAG).append("R13").append(LINE_SEPARATOR)
-						.append("A=M").append(LINE_SEPARATOR).append("D=M")
+				strB.append(A_TAG).append(index).append(LINE_SEPARATOR)
+						.append("D=A").append(LINE_SEPARATOR).append(A_TAG)
+						.append(seg).append(LINE_SEPARATOR).append("A=M")
+						.append(LINE_SEPARATOR).append("D=D+A")
+						.append(LINE_SEPARATOR).append("A=D")
+						.append(LINE_SEPARATOR).append("D=M")
 						.append(LINE_SEPARATOR).append(A_TAG).append(SP)
 						.append(LINE_SEPARATOR).append("A=M")
 						.append(LINE_SEPARATOR).append("M=D")
 						.append(LINE_SEPARATOR).append(A_TAG).append(SP)
 						.append(LINE_SEPARATOR).append("M=M+1")
 						.append(LINE_SEPARATOR);
-
 			}
 
 			if (segment.equalsIgnoreCase("temp")
 					|| segment.equalsIgnoreCase("pointer")
 					|| segment.equalsIgnoreCase("static")) {
+				String var = MessageFormat.format(LABEL_PATTEN2, new Object[] {
+						curVMFileName, index });
 				int base = 5;
 				if (segment.equalsIgnoreCase("pointer")) {
 					base = 3;
-				} else if (segment.equalsIgnoreCase("static")) {
-					base = 16;
 				}
 
-				strB.append(A_TAG).append("R" + (base + index))
-						.append(LINE_SEPARATOR).append("D=M")
-						.append(LINE_SEPARATOR).append(A_TAG).append(SP)
-						.append(LINE_SEPARATOR).append("A=M")
+				String varStr = segment.equalsIgnoreCase("static") ? var : "R"
+						+ (base + index);
+
+				strB.append(A_TAG).append(varStr).append(LINE_SEPARATOR)
+						.append("D=M").append(LINE_SEPARATOR).append(A_TAG)
+						.append(SP).append(LINE_SEPARATOR).append("A=M")
 						.append(LINE_SEPARATOR).append("M=D")
 						.append(LINE_SEPARATOR).append(A_TAG).append(SP)
 						.append(LINE_SEPARATOR).append("M=M+1")
@@ -322,56 +307,41 @@ public class CodeWriter {
 			}
 		}
 
-		if (Parser.SET_POP.equalsIgnoreCase(command)) {
+		if (Parser.TYPE_POP.equalsIgnoreCase(command)) {
 			if (segment.equalsIgnoreCase("local")
 					|| segment.equalsIgnoreCase("argument")
 					|| segment.equalsIgnoreCase("this")
 					|| segment.equalsIgnoreCase("that")) {
 
-				String seg, lab;
+				String seg;
 				if (segment.equalsIgnoreCase("local")) {
 					seg = SEGMENT_LCL;
-					lab = "POP_LCL";
 				} else if (segment.equalsIgnoreCase("argument")) {
 					seg = SEGMENT_ARG;
-					lab = "POP_ARG";
 				} else if (segment.equalsIgnoreCase("this")) {
 					seg = SEGMENT_THIS;
-					lab = "POP_THIS";
 				} else {
 					seg = SEGMENT_THAT;
-					lab = "POP_THAT";
 				}
-				++seq;
-				lab1 = MessageFormat.format(LABEL_PATTEN2, new Object[] { lab,
-						seq, "LOOP" });
-				lab2 = MessageFormat.format(LABEL_PATTEN2, new Object[] { lab,
-						seq, "END" });
 
-				strB.append(A_TAG).append(SP).append(LINE_SEPARATOR)
-						.append("AM=M-1").append(LINE_SEPARATOR).append("D=M")
-						.append(LINE_SEPARATOR).append(A_TAG).append("R13")
-						.append(LINE_SEPARATOR).append("M=D")
+				strB.append(A_TAG).append(index).append(LINE_SEPARATOR)
+						.append("D=A").append(LINE_SEPARATOR).append(A_TAG)
+						.append(seg).append(LINE_SEPARATOR).append("A=M")
+						.append(LINE_SEPARATOR).append("D=D+A")
 						.append(LINE_SEPARATOR).append(A_TAG).append(seg)
+						.append(LINE_SEPARATOR).append("M=D")
+						.append(LINE_SEPARATOR).append(A_TAG).append(SP)
+						.append(LINE_SEPARATOR).append("AM=M-1")
 						.append(LINE_SEPARATOR).append("D=M")
-						.append(LINE_SEPARATOR).append(A_TAG).append("R14")
+						.append(LINE_SEPARATOR).append(A_TAG).append(seg)
+						.append(LINE_SEPARATOR).append("A=M")
 						.append(LINE_SEPARATOR).append("M=D")
 						.append(LINE_SEPARATOR).append(A_TAG).append(index)
 						.append(LINE_SEPARATOR).append("D=A")
 						.append(LINE_SEPARATOR).append(A_TAG).append(seg)
-						.append(LINE_SEPARATOR).append(L_BEGIN_TAG)
-						.append(lab1).append(L_END_TAG).append(LINE_SEPARATOR)
-						.append("D=D-1").append(LINE_SEPARATOR).append(A_TAG)
-						.append(lab2).append(LINE_SEPARATOR).append("D;JLT")
-						.append(LINE_SEPARATOR).append(A_TAG).append("R14")
-						.append(LINE_SEPARATOR).append("M=M+1")
-						.append(LINE_SEPARATOR).append(A_TAG).append(lab1)
-						.append(LINE_SEPARATOR).append("D;JGE")
-						.append(LINE_SEPARATOR).append(L_BEGIN_TAG)
-						.append(lab2).append(L_END_TAG).append(LINE_SEPARATOR)
-						.append(A_TAG).append("R13").append(LINE_SEPARATOR)
-						.append("D=M").append(LINE_SEPARATOR).append(A_TAG)
-						.append("R14").append(LINE_SEPARATOR).append("A=M")
+						.append(LINE_SEPARATOR).append("A=M")
+						.append(LINE_SEPARATOR).append("D=A-D")
+						.append(LINE_SEPARATOR).append(A_TAG).append(seg)
 						.append(LINE_SEPARATOR).append("M=D")
 						.append(LINE_SEPARATOR);
 			}
@@ -379,19 +349,422 @@ public class CodeWriter {
 			if (segment.equalsIgnoreCase("temp")
 					|| segment.equalsIgnoreCase("pointer")
 					|| segment.equalsIgnoreCase("static")) {
+				String var = MessageFormat.format(LABEL_PATTEN2, new Object[] {
+						curVMFileName, index });
 				int base = 5;
 				if (segment.equalsIgnoreCase("pointer")) {
 					base = 3;
-				} else if (segment.equalsIgnoreCase("static")) {
-					base = 16;
 				}
+
+				String varStr = segment.equalsIgnoreCase("static") ? var : "R"
+						+ (base + index);
 
 				strB.append(A_TAG).append(SP).append(LINE_SEPARATOR)
 						.append("AM=M-1").append(LINE_SEPARATOR).append("D=M")
 						.append(LINE_SEPARATOR).append(A_TAG)
-						.append("R" + (base + index)).append(LINE_SEPARATOR)
-						.append("M=D").append(LINE_SEPARATOR);
+						.append(varStr)
+						.append(LINE_SEPARATOR).append("M=D")
+						.append(LINE_SEPARATOR);
 			}
+		}
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 执行VM初始化的汇编代码，该代码必须被置于输出文件的开头.
+	 * 
+	 */
+	public void writeInit() {
+		StringBuffer strB = new StringBuffer();
+		int spIndex = 0x100;
+		strB.append(COMMENT_TAG).append(" bootstrap").append(LINE_SEPARATOR)
+				.append(A_TAG).append(spIndex).append(LINE_SEPARATOR)
+				.append("D=A").append(LINE_SEPARATOR).append(A_TAG).append(SP)
+				.append(LINE_SEPARATOR).append("M=D").append(LINE_SEPARATOR);
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		writeCall("Sys.init", 0);
+	}
+
+	/**
+	 * 编写执行label命令的汇编代码.
+	 * 
+	 * @param label
+	 *            标签字符串
+	 */
+	public void writeLabel(final String label) {
+		StringBuffer strB = new StringBuffer();
+		strB.append(L_BEGIN_TAG).append(label).append(L_END_TAG)
+				.append(LINE_SEPARATOR);
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 编写执行goto命令的汇编代码.
+	 * 
+	 * @param label
+	 *            标签字符串
+	 */
+	public void writeGoto(final String label) {
+		StringBuffer strB = new StringBuffer();
+		strB.append(A_TAG).append(label).append(LINE_SEPARATOR).append("0;JMP")
+				.append(LINE_SEPARATOR);
+
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 编写执行if-goto命令的汇编代码.
+	 * 
+	 * @param label
+	 *            标签字符串
+	 */
+	public void writeIf(final String label) {
+		StringBuffer strB = new StringBuffer();
+		strB.append(A_TAG).append(SP).append(LINE_SEPARATOR).append("AM=M-1")
+				.append(LINE_SEPARATOR).append("D=M").append(LINE_SEPARATOR)
+				.append(A_TAG).append(label).append(LINE_SEPARATOR)
+				.append("D;JNE").append(LINE_SEPARATOR);
+
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 编写执行call命令的汇编代码.
+	 * 
+	 * @param functionName
+	 *            函数名称
+	 * @param numArgs
+	 *            参数个数
+	 */
+	public void writeCall(final String functionName, final int numArgs) {
+		StringBuffer strB = new StringBuffer();
+		String retLab = "RETURN" + (++seq);
+		// PUSH return-address
+		strB.append(A_TAG)
+				.append(retLab)
+				.append(LINE_SEPARATOR)
+				.append("D=A")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M+1")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" push return-address")
+				.append(LINE_SEPARATOR)
+				// PUSH LCL
+				.append(A_TAG)
+				.append(SEGMENT_LCL)
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M+1")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" push LCL")
+				.append(LINE_SEPARATOR)
+				// PUSH ARG
+				.append(A_TAG)
+				.append(SEGMENT_ARG)
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M+1")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" push ARG")
+				.append(LINE_SEPARATOR)
+				// PUSH THIS
+				.append(A_TAG)
+				.append(SEGMENT_THIS)
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M+1")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" push THIS")
+				.append(LINE_SEPARATOR)
+				// PUSH THAT
+				.append(A_TAG).append(SEGMENT_THAT).append(LINE_SEPARATOR)
+				.append("D=M").append(LINE_SEPARATOR).append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M+1")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" push THAT")
+				.append(LINE_SEPARATOR)
+				// ARG = SP-n-5
+				.append(A_TAG).append(SP).append(LINE_SEPARATOR).append("D=M")
+				.append(LINE_SEPARATOR).append(A_TAG).append(numArgs)
+				.append(LINE_SEPARATOR).append("D=D-A").append(LINE_SEPARATOR)
+				.append(A_TAG).append(5).append(LINE_SEPARATOR).append("D=D-A")
+				.append(LINE_SEPARATOR).append(A_TAG).append(SEGMENT_ARG)
+				.append(LINE_SEPARATOR).append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" ARG = SP-n-5")
+				.append(LINE_SEPARATOR)
+				// LCL = SP
+				.append(A_TAG).append(SP).append(LINE_SEPARATOR).append("D=M")
+				.append(LINE_SEPARATOR).append(A_TAG).append(SEGMENT_LCL)
+				.append(LINE_SEPARATOR).append("M=D").append('\t')
+				.append(COMMENT_TAG).append(" LCL = SP").append(LINE_SEPARATOR);
+
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// GOTO f
+		writeGoto(functionName);
+		// (return-address)
+		writeLabel(retLab);
+	}
+
+	/**
+	 * 编写执行return命令的汇编代码.
+	 * 
+	 */
+	public void writeReturn() {
+		StringBuffer strB = new StringBuffer();
+		// FRAME = LCL 保存当前函数的栈帧参考点（即：LCL）
+		// ARG=LCL-5-n SP=LCL+m [n-arg num m-loc num]
+		strB.append(A_TAG)
+				.append(SEGMENT_LCL)
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append("frame")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" FRAME = LCL")
+				.append(LINE_SEPARATOR)
+				// RET = *(FRAME-5)
+				.append(A_TAG)
+				.append(5)
+				.append(LINE_SEPARATOR)
+				.append("D=D-A")
+				.append(LINE_SEPARATOR)
+				.append("A=D")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append("ret")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" RET = *(FRAME-5)")
+				.append(LINE_SEPARATOR)
+				// *ARG = pop
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=M-1")
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SEGMENT_ARG)
+				.append(LINE_SEPARATOR)
+				.append("A=M")
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" *ARG = pop")
+				.append(LINE_SEPARATOR)
+				// SP = ARG+1
+				.append(A_TAG)
+				.append(SEGMENT_ARG)
+				.append(LINE_SEPARATOR)
+				.append("D=M+1")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SP)
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" SP = ARG+1")
+				.append(LINE_SEPARATOR)
+				// THAT = *(FRAME-1)
+				.append(A_TAG)
+				.append("frame")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(1)
+				.append(LINE_SEPARATOR)
+				.append("D=D-A")
+				.append(LINE_SEPARATOR)
+				.append("A=D")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SEGMENT_THAT)
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" THAT = *(FRAME-1)")
+				.append(LINE_SEPARATOR)
+				// THIS = *(FRAME-2)
+				.append(A_TAG)
+				.append("frame")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(2)
+				.append(LINE_SEPARATOR)
+				.append("D=D-A")
+				.append(LINE_SEPARATOR)
+				.append("A=D")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SEGMENT_THIS)
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" THIS = *(FRAME-2)")
+				.append(LINE_SEPARATOR)
+				// ARG = *(FRAME-3)
+				.append(A_TAG).append("frame").append(LINE_SEPARATOR)
+				.append("D=M").append(LINE_SEPARATOR).append(A_TAG).append(3)
+				.append(LINE_SEPARATOR)
+				.append("D=D-A")
+				.append(LINE_SEPARATOR)
+				.append("A=D")
+				.append(LINE_SEPARATOR)
+				.append("D=M")
+				.append(LINE_SEPARATOR)
+				.append(A_TAG)
+				.append(SEGMENT_ARG)
+				.append(LINE_SEPARATOR)
+				.append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" ARG = *(FRAME-3)")
+				.append(LINE_SEPARATOR)
+				// LCL = *(FRAME-4)
+				.append(A_TAG).append("frame").append(LINE_SEPARATOR)
+				.append("D=M").append(LINE_SEPARATOR).append(A_TAG).append(4)
+				.append(LINE_SEPARATOR).append("D=D-A").append(LINE_SEPARATOR)
+				.append("A=D").append(LINE_SEPARATOR).append("D=M")
+				.append(LINE_SEPARATOR).append(A_TAG).append(SEGMENT_LCL)
+				.append(LINE_SEPARATOR).append("M=D")
+				.append('\t')
+				.append(COMMENT_TAG)
+				.append(" LCL = *(FRAME-4)")
+				.append(LINE_SEPARATOR)
+				// JUMP TO Caller
+				.append(A_TAG).append("ret").append(LINE_SEPARATOR)
+				.append("A=M").append(LINE_SEPARATOR).append("0;JMP")
+				.append('\t').append(COMMENT_TAG).append(" JUMP TO Caller")
+				.append(LINE_SEPARATOR);
+
+		try {
+			fWriter.write(strB.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 编写执行function命令的汇编代码.
+	 * 
+	 * @param functionName
+	 * @param numLocals
+	 */
+	public void writeFunction(final String functionName, final int numLocals) {
+		writeLabel(functionName);
+		StringBuffer strB = new StringBuffer();
+		for (int i = 0; i < numLocals; i++) {
+			strB.append(A_TAG).append(SP).append(LINE_SEPARATOR).append("A=M")
+					.append(LINE_SEPARATOR).append("M=0")
+					.append(LINE_SEPARATOR).append(A_TAG).append(SP)
+					.append(LINE_SEPARATOR).append("M=M+1")
+					.append(LINE_SEPARATOR);
 		}
 		try {
 			fWriter.write(strB.toString());

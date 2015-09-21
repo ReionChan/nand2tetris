@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,12 +28,24 @@ public class Parser {
 	// public static final String NUMBER_REGULAR = "[0-9]*";
 
 	// 算术逻辑命令集
-	public static final String[] SET_ARI_LOG = { "add", "sub", "neg", "eq",
+	public static final String[] TYPE_ARI_LOG = { "add", "sub", "neg", "eq",
 			"gt", "lt", "and", "or", "not" };
 	// push命令
-	public static final String SET_PUSH = "push";
+	public static final String TYPE_PUSH = "push";
 	// pop命令
-	public static final String SET_POP = "pop";
+	public static final String TYPE_POP = "pop";
+	// label命令
+	public static final String TYPE_LABEL = "label";
+	// goto命令
+	public static final String TYPE_GOTO = "goto";
+	// if命令
+	public static final String TYPE_IF = "if-goto";
+	// function命令
+	public static final String TYPE_FUNCTION = "function";
+	// return命令
+	public static final String TYPE_RETURN = "return";
+	// call命令
+	public static final String TYPE_CALL = "call";
 
 	// 指令类型
 	public static enum CommandType {
@@ -53,6 +66,8 @@ public class Parser {
 	private Map<Integer, String> insSeqs = new LinkedHashMap<Integer, String>();
 	// 汇编代码写入器
 	private CodeWriter code;
+	// 当前方法名称
+	private String funcName;
 
 	/**
 	 * 设置汇编代码写入器.
@@ -128,6 +143,9 @@ public class Parser {
 		curInsStr = insSeqs.get(curInsNum);
 		curInstruct = insSeqs.get(curInsNum).split(VM_SEPARATOR);
 		curType = commandType();
+		if (curType.compareTo(CommandType.C_FUNCTION) == 0) {
+			funcName = arg1();
+		}
 	}
 
 	/**
@@ -136,14 +154,24 @@ public class Parser {
 	 * @return 指令类型
 	 */
 	public CommandType commandType() {
-		if (Arrays.asList(SET_ARI_LOG).contains(curInstruct[0])) {
+		if (Arrays.asList(TYPE_ARI_LOG).contains(curInstruct[0])) {
 			return CommandType.C_ARITHMETIC;
-		}
-		if (SET_PUSH.contains(curInstruct[0])) {
+		} else if (TYPE_PUSH.equalsIgnoreCase(curInstruct[0])) {
 			return CommandType.C_PUSH;
-		}
-		if (SET_POP.contains(curInstruct[0])) {
+		} else if (TYPE_POP.equalsIgnoreCase(curInstruct[0])) {
 			return CommandType.C_POP;
+		} else if (TYPE_LABEL.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_LABEL;
+		} else if (TYPE_GOTO.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_GOTO;
+		} else if (TYPE_IF.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_IF;
+		} else if (TYPE_FUNCTION.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_FUNCTION;
+		} else if (TYPE_RETURN.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_RETURN;
+		} else if (TYPE_CALL.equalsIgnoreCase(curInstruct[0])) {
+			return CommandType.C_CALL;
 		}
 		return null;
 	}
@@ -162,12 +190,7 @@ public class Parser {
 			return curInstruct[0];
 		}
 
-		if (curType.compareTo(CommandType.C_PUSH) == 0
-				|| curType.compareTo(CommandType.C_POP) == 0) {
-			return curInstruct[1];
-		}
-
-		return null;
+		return curInstruct[1];
 	}
 
 	/**
@@ -177,7 +200,9 @@ public class Parser {
 	 */
 	public int arg2() {
 		if (curType.compareTo(CommandType.C_PUSH) == 0
-				|| curType.compareTo(CommandType.C_POP) == 0) {
+				|| curType.compareTo(CommandType.C_POP) == 0
+				|| curType.compareTo(CommandType.C_FUNCTION) == 0
+				|| curType.compareTo(CommandType.C_CALL) == 0) {
 			return Integer.parseInt(curInstruct[2]);
 		} else {
 			throw new RuntimeException("No arg2 if type is "
@@ -197,9 +222,23 @@ public class Parser {
 			if (curType.compareTo(CommandType.C_PUSH) == 0
 					|| curType.compareTo(CommandType.C_POP) == 0) {
 				code.writePushPop(curInstruct[0], arg1(), arg2());
-			}
-			if (curType.compareTo(CommandType.C_ARITHMETIC) == 0) {
+			} else if (curType.compareTo(CommandType.C_ARITHMETIC) == 0) {
 				code.writeArithmetic(curInstruct[0]);
+			} else if (curType.compareTo(CommandType.C_LABEL) == 0) {
+				code.writeLabel(MessageFormat.format(CodeWriter.LABEL_PATTEN1,
+						new Object[] { funcName, arg1() }));
+			} else if (curType.compareTo(CommandType.C_IF) == 0) {
+				code.writeIf(MessageFormat.format(CodeWriter.LABEL_PATTEN1,
+						new Object[] { funcName, arg1() }));
+			} else if (curType.compareTo(CommandType.C_GOTO) == 0) {
+				code.writeGoto(MessageFormat.format(CodeWriter.LABEL_PATTEN1,
+						new Object[] { funcName, arg1() }));
+			} else if (curType.compareTo(CommandType.C_FUNCTION) == 0) {
+				code.writeFunction(arg1(), arg2());
+			} else if (curType.compareTo(CommandType.C_RETURN) == 0) {
+				code.writeReturn();
+			} else if (curType.compareTo(CommandType.C_CALL) == 0) {
+				code.writeCall(arg1(), arg2());
 			}
 		}
 	}
