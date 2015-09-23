@@ -1,0 +1,23 @@
+class Hello {
+
+	field String name;
+	
+	// Constructor
+	constructor Hello new(String n) {
+		let name = n;
+
+		return this;
+	}
+
+	method void sayHi() {
+		do Output.printString("Hello,");
+		do Output.printString(name);
+		do Output.printString("!");
+		return;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

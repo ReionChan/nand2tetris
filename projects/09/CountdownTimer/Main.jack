@@ -1,0 +1,11 @@
+class Main {
+
+	function void main() {
+		var CountdownTimer ct;
+
+		let ct = CountdownTimer.new(Keyboard.readInt("Please input seconds:"));
+		do ct.countdown();
+		do ct.dispose();
+		return;
+	}
+}

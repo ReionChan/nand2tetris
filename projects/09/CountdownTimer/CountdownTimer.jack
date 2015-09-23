@@ -1,0 +1,28 @@
+class CountdownTimer {
+	
+	field int seconds;
+	
+	constructor CountdownTimer new(int num) {
+		let seconds = num;
+		return this;
+	}
+
+	method void countdown() {
+		while(seconds > 0){
+			do Screen.clearScreen();
+			do Output.moveCursor(10, 25);
+			do Output.printInt(seconds);
+			let seconds = seconds - 1;
+			do Sys.wait(1000);
+		}
+			do Screen.clearScreen();
+			do Output.moveCursor(10, 25);
+			do Output.printString("Time's up!");
+		return;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

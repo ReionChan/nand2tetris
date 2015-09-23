@@ -1,0 +1,12 @@
+class Main {
+	
+	function void main() {
+		var Hello hello;
+
+		let hello = Hello.new(Keyboard.readLine("Please input your name:"));
+		do hello.sayHi();
+		do hello.dispose();
+
+		return;
+	} 
+}
