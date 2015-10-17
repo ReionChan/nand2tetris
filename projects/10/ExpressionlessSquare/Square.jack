@@ -11,13 +11,12 @@
  * for drawing, erasing, moving on the screen, and changing its size.
  */
 class Square {
-
     // Location on the screen
     field int x, y;
 
     // The size of the square
     field int size;
-
+ 
     // Constructs a new square with a given location and size.
     constructor Square new(int Ax, int Ay, int Asize) {
         let x = Ax;
