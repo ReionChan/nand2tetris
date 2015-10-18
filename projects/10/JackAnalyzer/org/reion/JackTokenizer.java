@@ -118,8 +118,6 @@ public class JackTokenizer {
 	private int curIndex = 0;
 	// 当前行的最大索引
 	private int curMaxIndex = -1;
-	// 编译引擎
-	// public CompilationEngine cEngine;
 
 	// 静态初始化
 	static {

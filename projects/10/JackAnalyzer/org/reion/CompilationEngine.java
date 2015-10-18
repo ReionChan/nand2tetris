@@ -140,6 +140,7 @@ public class CompilationEngine {
 				tokenizer.advance();
 				ele = createElemnet(TokenType.SYMBOL);
 				classVarEle.appendChild(ele);
+				value = tokenizer.getTokenValue(TokenType.SYMBOL);
 			} while (",".equals(value));
 		}
 		// add to class node
@@ -563,7 +564,8 @@ public class CompilationEngine {
 					"Return statement must be fowllowed by symbol '}'!");
 		}
 		ele = createElemnet(null);
-
+		ifStatEle.appendChild(ele);
+		
 		// else
 		tokenizer.advance();
 		value = tokenizer.getTokenValue(null);
