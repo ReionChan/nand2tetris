@@ -62,30 +62,22 @@ public class CompilationEngine {
 		root = document.createElement("class");
 		// class
 		tokenizer.advance();
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + tokenizer.getTokenValue(TokenType.KEYWORD)
-				+ " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		root.appendChild(ele);
 		// class name
 		tokenizer.advance();
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + tokenizer.getTokenValue(TokenType.IDENTIFIER)
-				+ " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.IDENTIFIER);
 		root.appendChild(ele);
 		// {
 		tokenizer.advance();
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + tokenizer.getTokenValue(TokenType.SYMBOL)
-				+ " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		root.appendChild(ele);
 
 		tokenizer.advance();
 		value = tokenizer.getTokenValue(TokenType.KEYWORD);
 		do {
 			// field or static
-			if (tokenizer.getTokenValue(null) != null
-					&& ((String) tokenizer.getTokenValue(null))
-							.matches("field|static")) {
+			if (value != null && ((String) value).matches("field|static")) {
 				if (methodTag) {
 					throw new RuntimeException(
 							"field or static must be defined before subroutine!");
@@ -93,21 +85,19 @@ public class CompilationEngine {
 				compileClassVarDec();
 			}
 			// subroutine
-			if (tokenizer.getTokenValue(null) != null
-					&& ((String) tokenizer.getTokenValue(null))
-							.matches("constructor|function|method")) {
+			if (value != null
+					&& ((String) value).matches("constructor|function|method")) {
 				methodTag = true;
 				compileSubroutine();
 			}
 			if (tokenizer.hasMoreTokens()) {
 				tokenizer.advance();
+				value = tokenizer.getTokenValue(null);
 			}
-		} while (!"}".equals(tokenizer.getTokenValue(null)));
+		} while (!"}".equals(value));
 
 		// }
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		root.appendChild(ele);
 		XmlUtils.writeXml(tFile, root);
 	}
@@ -124,8 +114,7 @@ public class CompilationEngine {
 		if (value != null && (value.toString()).matches("static|field")) {
 			classVarEle = document.createElement("classVarDec");
 			// static field
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 			classVarEle.appendChild(ele);
 			// type
 			tokenizer.advance();
@@ -139,24 +128,18 @@ public class CompilationEngine {
 			} else if (TokenType.IDENTIFIER.equals(tokenType)) {
 				value = tokenizer.getTokenValue(null);
 			}
-			ele = document.createElement(tokenType.name().toLowerCase());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			classVarEle.appendChild(ele);
 			// name1, name2, ...;
 			do {
 				// name1
 				tokenizer.advance();
-				value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-				ele = document.createElement(tokenizer.getTokenType()
-						.toString());
-				ele.setTextContent(" " + value + " ");
+				ele = createElemnet(tokenizer.getTokenType(),
+						TokenType.IDENTIFIER);
 				classVarEle.appendChild(ele);
 				// , or ;
 				tokenizer.advance();
-				value = tokenizer.getTokenValue(TokenType.SYMBOL);
-				ele = document.createElement(tokenizer.getTokenType()
-						.toString());
-				ele.setTextContent(" " + value + " ");
+				ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 				classVarEle.appendChild(ele);
 			} while (",".equals(value));
 		}
@@ -178,8 +161,7 @@ public class CompilationEngine {
 				&& (value.toString()).matches("constructor|function|method")) {
 			subroutineEle = document.createElement("subroutineDec");
 			// constructor function method
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 			subroutineEle.appendChild(ele);
 			// return type
 			tokenizer.advance();
@@ -193,37 +175,28 @@ public class CompilationEngine {
 			} else if (TokenType.IDENTIFIER.equals(tokenType)) {
 				value = tokenizer.getTokenValue(null);
 			}
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			subroutineEle.appendChild(ele);
 			// name of c f m
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.IDENTIFIER);
 			subroutineEle.appendChild(ele);
 			// (
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			subroutineEle.appendChild(ele);
 			// 参数列表
 			subroutineEle.appendChild(compileParameterList());
 			// )
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			subroutineEle.appendChild(ele);
 			// subroutineBody
 			bodyEle = document.createElement("subroutineBody");
 			subroutineEle.appendChild(bodyEle);
 			// {
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			bodyEle.appendChild(ele);
 
 			// var statements
@@ -242,9 +215,7 @@ public class CompilationEngine {
 			}
 
 			// }
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			bodyEle.appendChild(ele);
 		}
 		// add to class node
@@ -283,14 +254,11 @@ public class CompilationEngine {
 			} else if (TokenType.IDENTIFIER.equals(tokenType)) {
 				value = tokenizer.getTokenValue(null);
 			}
-			ele = document.createElement(tokenType.name().toLowerCase());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			paramListEle.appendChild(ele);
 			// param name
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.IDENTIFIER);
 			paramListEle.appendChild(ele);
 
 			// ,
@@ -298,9 +266,7 @@ public class CompilationEngine {
 			value = tokenizer.getTokenValue(TokenType.SYMBOL);
 			isComma = ",".equals(value);
 			if (isComma) {
-				ele = document.createElement(tokenizer.getTokenType()
-						.toString());
-				ele.setTextContent(" " + value + " ");
+				ele = createElemnet(tokenizer.getTokenType(), null);
 				paramListEle.appendChild(ele);
 				tokenizer.advance();
 			} else {
@@ -322,9 +288,7 @@ public class CompilationEngine {
 
 		// var
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		varDecEle.appendChild(ele);
 		// type
 		tokenizer.advance();
@@ -338,15 +302,12 @@ public class CompilationEngine {
 		} else if (TokenType.IDENTIFIER.equals(tokenType)) {
 			value = tokenizer.getTokenValue(null);
 		}
-		ele = document.createElement(tokenType.name().toLowerCase());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), null);
 		varDecEle.appendChild(ele);
 		// var names
 		do {
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.IDENTIFIER);
 			varDecEle.appendChild(ele);
 
 			tokenizer.advance();
@@ -354,9 +315,7 @@ public class CompilationEngine {
 		} while (",".equals(value));
 
 		// ;
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		varDecEle.appendChild(ele);
 
 		return varDecEle;
@@ -409,16 +368,14 @@ public class CompilationEngine {
 
 		// do
 		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		doStaEle.appendChild(ele);
 
 		// ClassName.subroutineName methodName varName.methodName
 		tokenizer.advance();
 		value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
 		do {
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			doStaEle.appendChild(ele);
 
 			tokenizer.advance();
@@ -426,23 +383,17 @@ public class CompilationEngine {
 		} while (!"(".equals(value));
 
 		// (
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		doStaEle.appendChild(ele);
 		// expList
 		doStaEle.appendChild(compileExpressionList());
 		// )
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		doStaEle.appendChild(ele);
 		// ;
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		doStaEle.appendChild(ele);
 		return doStaEle;
 	}
@@ -457,15 +408,11 @@ public class CompilationEngine {
 		letStaEle = document.createElement("letStatement");
 
 		// let
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		letStaEle.appendChild(ele);
 		// identifier
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.IDENTIFIER);
 		letStaEle.appendChild(ele);
 
 		tokenizer.advance();
@@ -473,8 +420,7 @@ public class CompilationEngine {
 		// [exp]
 		if ("[".equals(value)) {
 			// [
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			letStaEle.appendChild(ele);
 
 			// exp
@@ -482,26 +428,20 @@ public class CompilationEngine {
 
 			// ]
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			letStaEle.appendChild(ele);
 		} else {
 			tokenizer.recede();
 		}
 		// =
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		letStaEle.appendChild(ele);
 		// exp
 		letStaEle.appendChild(compileExpression());
 		// ;
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		letStaEle.appendChild(ele);
 		return letStaEle;
 	}
@@ -517,30 +457,22 @@ public class CompilationEngine {
 		whileStatEle = document.createElement("whileStatement");
 
 		// while
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		whileStatEle.appendChild(ele);
 		// (
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		whileStatEle.appendChild(ele);
 		// exp
 		whileStatEle.appendChild(compileExpression());
 		// )
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		whileStatEle.appendChild(ele);
 
 		// {
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		whileStatEle.appendChild(ele);
 
 		// statements
@@ -553,8 +485,7 @@ public class CompilationEngine {
 			throw new RuntimeException(
 					"Return statement must be fowllowed by symbol '}'!");
 		}
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), null);
 		whileStatEle.appendChild(ele);
 
 		return whileStatEle;
@@ -571,9 +502,7 @@ public class CompilationEngine {
 		retStaEle = document.createElement("returnStatement");
 
 		// return
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		retStaEle.appendChild(ele);
 
 		tokenizer.advance();
@@ -588,9 +517,7 @@ public class CompilationEngine {
 		}
 		// ;
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		retStaEle.appendChild(ele);
 
 		return retStaEle;
@@ -607,31 +534,23 @@ public class CompilationEngine {
 		ifStatEle = document.createElement("ifStatement");
 
 		// if
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.KEYWORD);
 		ifStatEle.appendChild(ele);
 		// (
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		ifStatEle.appendChild(ele);
 
 		// exp
 		ifStatEle.appendChild(compileExpression());
 		// )
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		ifStatEle.appendChild(ele);
 
 		// {
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.SYMBOL);
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
+		ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 		ifStatEle.appendChild(ele);
 
 		// statements
@@ -644,23 +563,18 @@ public class CompilationEngine {
 			throw new RuntimeException(
 					"Return statement must be fowllowed by symbol '}'!");
 		}
-		ele = document.createElement(tokenizer.getTokenType().toString());
-		ele.setTextContent(" " + value + " ");
-		ifStatEle.appendChild(ele);
+		ele = createElemnet(tokenizer.getTokenType(), null);
 
 		// else
 		tokenizer.advance();
 		value = tokenizer.getTokenValue(null);
 		if ("else".equals(value)) {
 			// else
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			ifStatEle.appendChild(ele);
 			// {
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			ifStatEle.appendChild(ele);
 
 			// statements
@@ -673,8 +587,7 @@ public class CompilationEngine {
 				throw new RuntimeException(
 						"Return statement must be fowllowed by symbol '}'!");
 			}
-			ele = document.createElement(tokenizer.getTokenType().toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			ifStatEle.appendChild(ele);
 		}
 		tokenizer.recede();
@@ -697,9 +610,7 @@ public class CompilationEngine {
 			value = tokenizer.getTokenValue(null);
 			// op
 			if (value.toString().matches("\\+|-|\\*|/|\\&|\\||<|=|>|~")) {
-				ele = document.createElement(tokenizer.getTokenType()
-						.toString());
-				ele.setTextContent(" " + tokenizer.getTokenValue(null) + " ");
+				ele = createElemnet(tokenizer.getTokenType(), null);
 				expEle.appendChild(ele);
 				opTag = true;
 			} else {
@@ -726,35 +637,28 @@ public class CompilationEngine {
 		// ( exp )
 		if ("(".equals(value.toString())) {
 			// (
-			ele = document.createElement(tokenType.toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			termEle.appendChild(ele);
 			// exp
 			termEle.appendChild(compileExpression());
 			// )
 			tokenizer.advance();
-			value = tokenizer.getTokenValue(TokenType.SYMBOL);
-			ele = document.createElement(tokenType.toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), TokenType.SYMBOL);
 			termEle.appendChild(ele);
 		} else if (value.toString().matches("\\-|~")) { // ~|- term
 			// - ~
-			ele = document.createElement(tokenType.toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			termEle.appendChild(ele);
 			// term
 			termEle.appendChild(compileTerm());
 		} else if (TokenType.INT_CONST.equals(tokenType)
 				|| TokenType.STRING_CONST.equals(tokenType)
 				|| TokenType.KEYWORD.equals(tokenType)) { // 123 "abc" KEYWORD
-			ele = document.createElement(tokenType.toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			termEle.appendChild(ele);
 		} else if (TokenType.IDENTIFIER.equals(tokenType)) {
 			// name
-			value = tokenizer.getTokenValue(null);
-			ele = document.createElement(tokenType.toString());
-			ele.setTextContent(" " + value + " ");
+			ele = createElemnet(tokenizer.getTokenType(), null);
 			termEle.appendChild(ele);
 
 			tokenizer.advance();
@@ -762,65 +666,61 @@ public class CompilationEngine {
 
 			// name[]
 			if ("[".equals(value.toString())) {
-				// [
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 				// exp
 				tokenizer.advance();
 				termEle.appendChild(compileExpression());
-				// ]
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 			} else if ("(".equals(value)) { // name(expList)
-				// (
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 				// expList
 				termEle.appendChild(compileExpressionList());
 				// )
 				tokenizer.advance();
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 			} else if (".".equals(value)) { // name.sub(expList)
-				// .
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 				// sub
 				tokenizer.advance();
-				value = tokenizer.getTokenValue(TokenType.IDENTIFIER);
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" " + value + " ");
+				ele = createElemnet(tokenizer.getTokenType(),
+						TokenType.IDENTIFIER);
 				termEle.appendChild(ele);
 				// (
 				tokenizer.advance();
-				value = tokenizer.getTokenValue(TokenType.SYMBOL);
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 				// expList
 				termEle.appendChild(compileExpressionList());
 				// )
 				tokenizer.advance();
-				ele = document.createElement(tokenType.toString());
-				ele.setTextContent(" "
-						+ tokenizer.getTokenValue(TokenType.SYMBOL) + " ");
+				ele = createElemnet(tokenType, TokenType.SYMBOL);
 				termEle.appendChild(ele);
 			} else {
 				tokenizer.recede();
 			}
 		}
 		return termEle;
+	}
+
+	/**
+	 * 创建一个DOM元素.
+	 * 
+	 * @param tokenType
+	 *            字元类型
+	 * @param checkType
+	 *            校验类型
+	 * @return Element
+	 */
+	private Element createElemnet(final TokenType tokenType, TokenType checkType) {
+		Element ele;
+		ele = document.createElement(tokenType.toString());
+		ele.setTextContent(" " + tokenizer.getTokenValue(checkType) + " ");
+		return ele;
 	}
 
 	/**
@@ -845,9 +745,7 @@ public class CompilationEngine {
 			tokenizer.advance();
 			value = tokenizer.getTokenValue(null);
 			if (value.toString().equals(",")) {
-				ele = document.createElement(tokenizer.getTokenType()
-						.toString());
-				ele.setTextContent(" " + value + " ");
+				ele = createElemnet(tokenizer.getTokenType(), null);
 				expListEle.appendChild(ele);
 				tag = true;
 			} else {
