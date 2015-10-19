@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -57,6 +58,7 @@ public final class XmlUtils {
 		TransformerFactory tff = TransformerFactory.newInstance();
 		try {
 			Transformer tf = tff.newTransformer();
+			tf.setOutputProperty(OutputKeys.INDENT, "yes");
 			FileOutputStream fos = new FileOutputStream(xmlFile);
 			tf.transform(new DOMSource(rootNode), new StreamResult(fos));
 			fos.close();
