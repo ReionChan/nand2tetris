@@ -33,9 +33,6 @@ public class CompilationEngine {
 	 */
 	CompilationEngine(final JackTokenizer jToken) {
 		tokenizer = jToken;
-		tFile = new File(tokenizer.getJFile().getAbsolutePath()
-				.replace(JackAnalyzer.SOURCE_FIX, JackAnalyzer.TARGET_FIX));
-
 		File sFile = tokenizer.getJFile();
 		File output = new File(sFile.getParent() + File.separator + "output");
 		if (!output.exists()) {
@@ -335,7 +332,10 @@ public class CompilationEngine {
 		statementsEle = document.createElement("statements");
 
 		tokenizer.advance();
-		value = tokenizer.getTokenValue(TokenType.KEYWORD);
+		value = tokenizer.getTokenValue(null);
+		if ("}".equals(value)) {
+			tokenizer.recede();
+		}
 		do {
 			if ("let".equals(value)) {
 				ele = compileLet();
@@ -485,7 +485,7 @@ public class CompilationEngine {
 		value = tokenizer.getTokenValue(TokenType.SYMBOL);
 		if (!"}".equals(value)) {
 			throw new RuntimeException(
-					"Return statement must be fowllowed by symbol '}'!");
+					"while statement syntax error, missing '}'!");
 		}
 		ele = createElemnet(null);
 		whileStatEle.appendChild(ele);
@@ -561,7 +561,7 @@ public class CompilationEngine {
 		value = tokenizer.getTokenValue(TokenType.SYMBOL);
 		if (!"}".equals(value)) {
 			throw new RuntimeException(
-					"Return statement must be fowllowed by symbol '}'!");
+					"if statement syntax error, missing '}'!");
 		}
 		ele = createElemnet(null);
 		ifStatEle.appendChild(ele);
@@ -586,12 +586,14 @@ public class CompilationEngine {
 			value = tokenizer.getTokenValue(TokenType.SYMBOL);
 			if (!"}".equals(value)) {
 				throw new RuntimeException(
-						"Return statement must be fowllowed by symbol '}'!");
+						"else statement syntax error, missing '}'!");
 			}
 			ele = createElemnet(null);
 			ifStatEle.appendChild(ele);
+		} else {
+			tokenizer.recede();
 		}
-		tokenizer.recede();
+		
 		return ifStatEle;
 	}
 
