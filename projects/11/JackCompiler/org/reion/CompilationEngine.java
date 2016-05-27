@@ -681,9 +681,11 @@ public class CompilationEngine {
 			} else if (".".equals(value)) {
 				// TYPE_10 className|varName.subroutineNmae(expList)
 				int argsNum = 0;
-				// 调用自己的方法 需要将方法替换成类名.方法名 并将this指针压入栈
+				// 调用自己的方法 需要将方法替换成类名.方法名 并将变量对应的Segment段指针压入栈
 				if (!Kind.NONE.equals(table.kindOf(varName))) {
-					vmWriter.writePush(Segment.THIS, table.indexOf(varName));
+					// var 本地变量调用自己的方法，要获取Segment,不能写死This
+					//vmWriter.writePush(Segment.THIS, table.indexOf(varName));
+					vmWriter.writePush(getSegment(table.kindOf(varName)), table.indexOf(varName));
 					argsNum++;
 					varName = table.typeOf(varName);
 				}

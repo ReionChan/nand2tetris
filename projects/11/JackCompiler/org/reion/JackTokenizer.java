@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 从输入流中删除所有注释和空格，并根据Jack语法 规则将输入流分解成Jack语言的字元.
@@ -34,7 +36,7 @@ public class JackTokenizer {
 	/**
 	 * 最小整数
 	 */
-	public static final int MIN_INT = 0;
+	public static final int MIN_INT = -0x8000;
 
 	/**
 	 * 最大整数
@@ -80,17 +82,19 @@ public class JackTokenizer {
 	/**
 	 * JACK关键字
 	 */
-	public static HashSet<String> keywordSet;
+	public static Set<String> keywordSet;
 
 	/**
 	 * JACK符号
 	 */
-	public static HashSet<String> symbolSet;
+	public static Set<String> symbolSet;
 
 	// 源文件输入流.
 	// private FileReader fReader;
 	// 源文件.
 	private File jFile;
+	// 之前字元是否为-
+	private boolean isNeg;
 	// 当前字元
 	private String curToken;
 	// 当前字元类型
@@ -111,15 +115,17 @@ public class JackTokenizer {
 	// 静态初始化
 	static {
 		// 关键字集合
-		keywordSet = new HashSet<String>();
+		HashSet<String> hset1 = new HashSet<String>();
 		for (String str1 : KEYWORDS) {
-			keywordSet.add(str1);
+			hset1.add(str1);
 		}
+		keywordSet = Collections.unmodifiableSet(hset1);
 		// 符号集合
-		symbolSet = new HashSet<String>();
+		HashSet<String> hset2 = new HashSet<String>();
 		for (String str2 : SYMBOLS) {
-			symbolSet.add(str2);
+			hset2.add(str2);
 		}
+		symbolSet = Collections.unmodifiableSet(hset2);
 	}
 
 	/**
@@ -262,8 +268,9 @@ public class JackTokenizer {
 			throw new RuntimeException(
 					"Current index is already at the end of the token array!");
 		}
-
+		
 		if (curIndex <= curMaxIndex) {
+			isNeg = curToken == null ? false : curToken.equals("-");
 			curToken = tokensOfLine.get(curIndex++);
 			tokenType = tokenType();
 			curMaxIndex = tokensOfLine.size() - 1;
@@ -283,6 +290,12 @@ public class JackTokenizer {
 		// 当前行够回退
 		if (curIndex > 1) {
 			curIndex -= 2;
+			if (curIndex-1 < 0 ) {
+				isNeg = false;
+			} else {
+				curToken = tokensOfLine.get(curIndex-1);
+				isNeg = curToken == null ? false : curToken.equals("-");
+			}
 			curToken = tokensOfLine.get(curIndex++);
 			tokenType = tokenType();
 		} else if (curLineNum > 1) { // 非首行回退上一行
@@ -290,6 +303,12 @@ public class JackTokenizer {
 					--curLineNum).split(" ")));
 			curMaxIndex = tokensOfLine.size() - 1;
 			curIndex = curMaxIndex;
+			if (curIndex-1 < 0 ) {
+				isNeg = false;
+			} else {
+				curToken = tokensOfLine.get(curIndex-1);
+				isNeg = curToken == null ? false : curToken.equals("-");
+			}
 			curToken = tokensOfLine.get(curIndex++);
 			tokenType = tokenType();
 		} else {
@@ -310,9 +329,9 @@ public class JackTokenizer {
 			return TokenType.SYMBOL;
 		} else if (curToken.matches("\\d+")) {
 			int cst = Integer.parseInt(curToken);
-			if (cst < MIN_INT || cst > MAX_INT) {
+			if (cst < MIN_INT || (cst == MAX_INT+1 && !isNeg) || cst > MAX_INT + 1) {
 				throw new RuntimeException(
-						"int constant is out of range at line " + curLineNum);
+						"int constant is out of range at line " + curLineNum + getCurrentInfo());
 			}
 			return TokenType.INT_CONST;
 		} else if (curToken.matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
