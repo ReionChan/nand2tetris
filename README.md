@@ -36,29 +36,29 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 ### 结构
 * 典型的硬件体系 （第一章 ~ 第五章）
 
-	* 布尔逻辑		[`Project 01`](#p01)
+	* 布尔逻辑		[`Project 01`](#project-01)
 	
-	* 布尔算术 		[`Project 02`](#p02)
+	* 布尔算术 		[`Project 02`](#project-02)
 	
-	* 时序逻辑		[`Project 03`](#p03)
+	* 时序逻辑		[`Project 03`](#project-03)
 	
-	* 机器语言		[`Project 04`](#p04)
+	* 机器语言		[`Project 04`](#project-04)
 	
-	* 计算机体系结构	[`Project 05`](#p05)
+	* 计算机体系结构	[`Project 05`](#project-05)
 	
 * 典型的软件体系 （第六章 ~ 第十二章）
 
-	* 汇编编译器		[`Project 06`](#p06)
+	* 汇编编译器		[`Project 06`](#project-06)
 	
-	* 虚拟机			[`Project 07`](#p07) [`Project 08`](#p08)
+	* 虚拟机			[`Project 07`](#project-07) [`Project 08`](#project-08)
 	
-	* 编译器			[`Project 10`](#p10) [`Project 11`](#p11)
+	* 编译器			[`Project 10`](#project-10) [`Project 11`](#project-11)
 	
-	* 操作系统		[`Project 12`](#p12)
+	* 操作系统		[`Project 12`](#project-12)
 	
-	* 高级语言/应用程序	[`Project 09`](#p09)
+	* 高级语言/应用程序	[`Project 09`](#project-09)
 
-### [[Project 01](https://github.com/ReionChan/nand2tetris/tree/master/projects/01)](id:p01)
+### [[Project 01](https://github.com/ReionChan/nand2tetris/tree/master/projects/01)](id:project-01)
 * 基本逻辑门 (1位)
 	* [Not 非门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Not.hdl)
 	
@@ -95,7 +95,8 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	* [DMux8Way 8路解复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/DMux8Way.hdl)
 
 	
-### [[Project 02](https://github.com/ReionChan/nand2tetris/tree/master/projects/02)](id:p02)
+### [[Project 02](https://github.com/ReionChan/nand2tetris/tree/master/projects/02)](id:project-02)
+
 * 加法器
 	* [HalfAdder 半加器](https://github.com/ReionChan/nand2tetris/blob/master/projects/02/HalfAdder.hdl)
 	
@@ -110,7 +111,8 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	
 	* [ALU 16-位算术逻辑单元](https://github.com/ReionChan/nand2tetris/blob/master/projects/02/ALU.hdl)
 
-### [[Project 03](https://github.com/ReionChan/nand2tetris/tree/master/projects/03)](id:p03)
+### [[Project 03](https://github.com/ReionChan/nand2tetris/tree/master/projects/03)](id:project-03)
+
 * [Bit 1-位寄存器](https://github.com/ReionChan/nand2tetris/blob/master/projects/03/a/Bit.hdl)
 
 * [Register 16-位寄存器](https://github.com/ReionChan/nand2tetris/blob/master/projects/03/a/Register.hdl)
@@ -127,19 +129,22 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 * [PC 计数器](https://github.com/ReionChan/nand2tetris/blob/master/projects/03/a/PC.hdl)
 
-### [[Project 04](https://github.com/ReionChan/nand2tetris/tree/master/projects/04)](id:p04)
+### [[Project 04](https://github.com/ReionChan/nand2tetris/tree/master/projects/04)](id:project-04)
+
 * [Mult.asm 乘法程序](https://github.com/ReionChan/nand2tetris/blob/master/projects/04/mult/Mult.asm)
 
 * [Fill.asm I/O处理程序](https://github.com/ReionChan/nand2tetris/blob/master/projects/04/fill/Fill.asm)
 
-### [[Project 05](https://github.com/ReionChan/nand2tetris/tree/master/projects/05)](id:p05)
+### [[Project 05](https://github.com/ReionChan/nand2tetris/tree/master/projects/05)](id:project-05)
+
 * [CPU 中央处理器](https://github.com/ReionChan/nand2tetris/blob/master/projects/05/CPU.hdl)
 
 * [Memory 内存](https://github.com/ReionChan/nand2tetris/blob/master/projects/05/Memory.hdl)
 
 * [Computer 计算机](https://github.com/ReionChan/nand2tetris/blob/master/projects/05/Computer.hdl)
 
-### [[Project 06](https://github.com/ReionChan/nand2tetris/tree/master/projects/06)](id:p06)
+### [[Project 06](https://github.com/ReionChan/nand2tetris/tree/master/projects/06)](id:project-06)
+
 * [汇编编译器源码](https://github.com/ReionChan/nand2tetris/tree/master/projects/06/Assembler)
 
 	* [Parser.java](https://github.com/ReionChan/nand2tetris/blob/master/projects/06/Assembler/org/reion/Parser.java) 语法分析器
@@ -173,7 +178,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 		
 		* [Pong.asm](https://github.com/ReionChan/nand2tetris/blob/master/projects/06/pong/Pong.asm)
 
-### [[Project 07](https://github.com/ReionChan/nand2tetris/tree/master/projects/07)](id:p07)
+### [[Project 07](https://github.com/ReionChan/nand2tetris/tree/master/projects/07)](id:project-07)
 
 * [VM翻译器](https://github.com/ReionChan/nand2tetris/tree/master/projects/07/VMTranslator)
 
@@ -201,7 +206,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 		
 		* 使用static段执行pop和push操作 [StaticTest.vm](https://github.com/ReionChan/nand2tetris/blob/master/projects/07/MemoryAccess/StaticTest/StaticTest.vm)
 
-### [[Project 08](https://github.com/ReionChan/nand2tetris/tree/master/projects/08)](id:p08)
+### [[Project 08](https://github.com/ReionChan/nand2tetris/tree/master/projects/08)](id:project-08)
 
 * [VM翻译器](https://github.com/ReionChan/nand2tetris/tree/master/projects/08/VMTranslator)
 
@@ -241,7 +246,8 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 			
 			* [Sys.vm](https://github.com/ReionChan/nand2tetris/blob/master/projects/08/FunctionCalls/StaticsTest/Sys.vm)
 		
-### [[Project 09](https://github.com/ReionChan/nand2tetris/tree/master/projects/09)](id:p09)
+### [[Project 09](https://github.com/ReionChan/nand2tetris/tree/master/projects/09)](id:project-09)
+
 * [Hello](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Hello) 打招呼程序 `Author: Reion Chan`
 
 	![Hello_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Hello/Hello.gif?raw=true =350x "Hello_demo")
@@ -261,7 +267,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 * [Jack_OS_API.PDF](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Jack%20OS%20API.pdf)
 
-### [[Project 10](https://github.com/ReionChan/nand2tetris/tree/master/projects/10)](id:p10)
+### [[Project 10](https://github.com/ReionChan/nand2tetris/tree/master/projects/10)](id:project-10)
 
 * [Jack语法分析器](https://github.com/ReionChan/nand2tetris/tree/master/projects/10/JackAnalyzer)
 
@@ -283,7 +289,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	
 	* [Array Test](https://github.com/ReionChan/nand2tetris/tree/master/projects/10/ArrayTest) 数组测试程序
 
-### [[Project 11](https://github.com/ReionChan/nand2tetris/tree/master/projects/11)](id:p11)
+### [[Project 11](https://github.com/ReionChan/nand2tetris/tree/master/projects/11)](id:project-11)
 
 * [Jack编译器](https://github.com/ReionChan/nand2tetris/tree/master/projects/11/JackCompiler)
 
@@ -314,7 +320,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	* [Complex Arrays](https://github.com/ReionChan/nand2tetris/tree/master/projects/11/ComplexArrays) 复数计算 （数组引用、表达式）
 
 
-### [[Project 12](https://github.com/ReionChan/nand2tetris/tree/master/projects/12)](id:p12)
+### [[Project 12](https://github.com/ReionChan/nand2tetris/tree/master/projects/12)](id:project-12)
 
 * [Math.jack](https://github.com/ReionChan/nand2tetris/blob/master/projects/12/Math.jack) 数学计算类
   
@@ -363,14 +369,14 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	writeFunction中参数`nArgs(int)` 应改为 `nLocals(int)`
 	
 		
-[^1]:周维、宋磊、陈曦翻译，电子工业出版社出版
+[^1]: 周维、宋磊、陈曦翻译，电子工业出版社出版
 
-[^2]:MIT Press, By [`Noam Nisan`](http://www.cs.huji.ac.il/~noam/) and [`Shimon Schocken`](http://shimonschocken.com/)
+[^2]: MIT Press, By [`Noam Nisan`](http://www.cs.huji.ac.il/~noam/) and [`Shimon Schocken`](http://shimonschocken.com/)
 
-[^3]:[Multiplexor 多路复用器](https://en.wikipedia.org/wiki/Multiplexer)，即：多路模拟信号通过选择位确定哪一路进行输出，多路串行共享输出线路
+[^3]: [Multiplexor 多路复用器](https://en.wikipedia.org/wiki/Multiplexer)，即：多路模拟信号通过选择位确定哪一路进行输出，多路串行共享输出线路
 	
-[^4]:Demultiplexor 解复用器，与多路复用器相反，将单路模拟信号通过选择位确定输出到多条输出位的其中一条线路
+[^4]: Demultiplexor 解复用器，与多路复用器相反，将单路模拟信号通过选择位确定输出到多条输出位的其中一条线路
 	
-[^5]:`多位` 输入、输出线路一次能够接纳、输出的比特位数 
+[^5]: `多位` 输入、输出线路一次能够接纳、输出的比特位数 
 	
-[^6]:`多通道` 输入线路的条数
+[^6]: `多通道` 输入线路的条数
