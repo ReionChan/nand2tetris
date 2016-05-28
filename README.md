@@ -250,20 +250,20 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 * [Hello](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Hello) 打招呼程序 `Author: Reion Chan`
 
-	![Hello_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Hello/Hello.gif?raw=true =350x "Hello_demo")
+	![Hello_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Hello/Hello.gif?raw=true =450x "Hello_demo")
 
 * [Countdown Timer](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/CountdownTimer) 倒计时程序 `Author: Reion Chan`
 
-	![Countdown_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/CountdownTimer/Countdown.gif?raw=true =350x "Countdown_demo")
+	![Countdown_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/CountdownTimer/Countdown.gif?raw=true =450x "Countdown_demo")
 
 
 * [Rolling Ball](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/RollingBall) 滚球程序 `Author: Reion Chan`
 
-	![RollingBall_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/RollingBall/RollingBall.gif?raw=true =350x "RollingBall_demo")
+	![RollingBall_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/RollingBall/RollingBall.gif?raw=true =450x "RollingBall_demo")
 
 * [Square](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Square) 官方样例程序 `Author: Nand2Tetris.org`
 
-	![Square_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Square/Square.gif?raw=true =350x "Square_demo")
+	![Square_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Square/Square.gif?raw=true =450x "Square_demo")
 
 * [Jack_OS_API.PDF](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Jack%20OS%20API.pdf)
 
