@@ -1,13 +1,9 @@
 ## 《计算机系统要素-从零开始构建现代计算机》[^1]
 
-[^1]:周维、宋磊、陈曦翻译，电子工业出版社出版
-
  > 之前一直有想了解现代计算机是如何构建起来的，偶然间看到[`Shimon Schocken`](http://shimonschocken.com/)在[TED](https://www.youtube.com/watch?v=iE7YRHxwoDs)的一期演讲，介绍其为学生开发了一套逐步构建现代计算机的课程，该课程让大家了解现代计算机如何从基本门电路开始慢慢被构建。全书以项目为单元，逐一完成这些项目，即可构造出一个16位的Hack计算机硬件，在此硬件之上，开发出汇编编译器、堆栈式虚拟机，针对虚拟机设计出高级编程语言Jack，同时开发出相应的Jack语言编译器。真是相见恨晚，细读的同时根据规范采用Java语言完成了各个章节项目，故而有了此GitHub上的项目代码。
 
 ### 资源
 * 原书：[The Elements of Computing Systems](http://www.amazon.com/Elements-Computing-Systems-Building-Principles/dp/0262640686/ref=ed_oe_p "购买") [^2]
-
-[^2]:MIT Press, By [`Noam Nisan`](http://www.cs.huji.ac.il/~noam/) and [`Shimon Schocken`](http://shimonschocken.com/)
 
 * 官网：<http://www.nand2tetris.org>
 
@@ -16,6 +12,7 @@
 * Nand2tetris软件: [下载](http://www.nand2tetris.org/software/nand2tetris.zip "Download")
 
 	* [Mac OS X 配置](http://www.nand2tetris.org/software/mac_guide.html "Setup Guide for Mac OS X by Yong Bakos")
+	
 	* Windows 配置
 	
 	> 下载后, 将zip文件放到电脑上的一个空目录里然后解压，保持解压缩的文件、目录的名称和结构不变。运行该软件的电脑必需包含`JRE（Java运行环境）`，JRE可以在很多网站免费下载，例如[Java官网](http://java.com/zh_CN)。为了更好的性能，请确保下载最新本。
@@ -75,9 +72,6 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	
 	* [DMux 解复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/DMux.hdl) [^4]
 	
-	[^3]:[Multiplexor 多路复用器](https://en.wikipedia.org/wiki/Multiplexer)，即：多路模拟信号通过选择位确定哪一路进行输出，多路串行共享输出线路
-	[^4]:Demultiplexor 解复用器，与多路复用器相反，将单路模拟信号通过选择位确定输出到多条输出位的其中一条线路
-	
 	
 * 多位[^5] 基本门 (16位)
 	* [Not16 16-位非门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Not16.hdl)
@@ -88,7 +82,6 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	
 	* [Mux16 16-位2路复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Mux16.hdl)
 	
-	[^5]:`多位` 输入、输出线路一次能够接纳、输出的比特位数 
 	
 * 多通道[^6] 逻辑门
 	* [Or8Way 8路或门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Or8Way.hdl)
@@ -100,8 +93,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	* [DMux4Way 4路解复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/DMux4Way.hdl)
 	
 	* [DMux8Way 8路解复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/DMux8Way.hdl)
-	
-	[^6]:`多通道` 输入线路的条数
+
 	
 ### [[Project 02](https://github.com/ReionChan/nand2tetris/tree/master/projects/02)](id:p02)
 * 加法器
@@ -252,20 +244,20 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 ### [[Project 09](https://github.com/ReionChan/nand2tetris/tree/master/projects/09)](id:p09)
 * [Hello](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Hello) 打招呼程序 `Author: Reion Chan`
 
-	![Hello_demo](projects/09/Hello/Hello.gif =350x "Hello_demo")
+	![Hello_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Hello/Hello.gif?raw=true =350x "Hello_demo")
 
 * [Countdown Timer](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/CountdownTimer) 倒计时程序 `Author: Reion Chan`
 
-	![Countdown_demo](projects/09/CountdownTimer/Countdown.gif =350x "Countdown_demo")
+	![Countdown_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/CountdownTimer/Countdown.gif?raw=true =350x "Countdown_demo")
 
 
 * [Rolling Ball](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/RollingBall) 滚球程序 `Author: Reion Chan`
 
-	![RollingBall_demo](projects/09/RollingBall/RollingBall.gif =350x "RollingBall_demo")
+	![RollingBall_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/RollingBall/RollingBall.gif?raw=true =350x "RollingBall_demo")
 
 * [Square](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Square) 官方样例程序 `Author: Nand2Tetris.org`
 
-	![Square_demo](projects/09/Square/Square.gif =350x "Square_demo")
+	![Square_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Square/Square.gif?raw=true =350x "Square_demo")
 
 * [Jack_OS_API.PDF](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Jack%20OS%20API.pdf)
 
@@ -370,8 +362,15 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 * `11.3.4节` `Page-240`
 	writeFunction中参数`nArgs(int)` 应改为 `nLocals(int)`
 	
+		
+[^1]:周维、宋磊、陈曦翻译，电子工业出版社出版
 
+[^2]:MIT Press, By [`Noam Nisan`](http://www.cs.huji.ac.il/~noam/) and [`Shimon Schocken`](http://shimonschocken.com/)
 
-
-
-
+[^3]:[Multiplexor 多路复用器](https://en.wikipedia.org/wiki/Multiplexer)，即：多路模拟信号通过选择位确定哪一路进行输出，多路串行共享输出线路
+	
+[^4]:Demultiplexor 解复用器，与多路复用器相反，将单路模拟信号通过选择位确定输出到多条输出位的其中一条线路
+	
+[^5]:`多位` 输入、输出线路一次能够接纳、输出的比特位数 
+	
+[^6]:`多通道` 输入线路的条数
