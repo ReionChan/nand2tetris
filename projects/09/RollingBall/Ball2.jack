@@ -1,0 +1,86 @@
+class Ball2 {
+	field Array bitMap;
+
+	constructor Ball2 new() {
+		let bitMap = Array.new(300);
+
+		do fillBitMap(0, 0, 0, 0, 0, 0);
+		do fillBitMap(1, 0, -12800, 63, 0, 0);
+		do fillBitMap(2, 0, 448, 6146, 0, 0);
+		do fillBitMap(3, 0, 112, 15366, 0, 0);
+		do fillBitMap(4, 0, -32740, 32319, 0, 0);
+		do fillBitMap(5, 0, -16378, 32767, 0, 0);
+		do fillBitMap(6, 0, -4093, -3841, 8, 0);
+		do fillBitMap(7, -32767-1, -2047, -32513, 48, 0);
+		do fillBitMap(8, 0, -1021, 127, 96, 0);
+		do fillBitMap(9, -32767-1, -481, 63, 206, 0);
+		do fillBitMap(10, -16384, -1, 63, 510, 0);
+		do fillBitMap(11, -8192, -769, 63, 126, 0);
+		do fillBitMap(12, -4096, -8065, 31, 254, 0);
+		do fillBitMap(13, -2048, 63, 31, 254, 0);
+		do fillBitMap(14, -2048, 31, 12, 510, 0);
+		do fillBitMap(15, -1024, 31, 16, 510, 0);
+		do fillBitMap(16, -1024, 15, 248, 510, 0);
+		do fillBitMap(17, -512, 15, 2040, 510, 0);
+		do fillBitMap(18, -512, 7, 16380, 1022, 0);
+		do fillBitMap(19, -256, 7, -4, 1022, 0);
+		do fillBitMap(20, -32, 3, -2, 1016, 0);
+		do fillBitMap(21, -800, 3, -2, 960, 0);
+		do fillBitMap(22, -8096, 1, -2, 768, 0);
+		do fillBitMap(23, 96, 1, -1, 0, 0);
+		do fillBitMap(24, 112, 2, -1, 14336, 0);
+		do fillBitMap(25, 48, 31, 32767, 30720, 0);
+		do fillBitMap(26, 48, -32513, 32767, -2048, 0);
+		do fillBitMap(27, 48, -30721, 32767, -2048, 0);
+		do fillBitMap(28, -32720, -8193, 32767, -2048, 0);
+		do fillBitMap(29, -32720, 16383, 16383, -2048, 0);
+		do fillBitMap(30, -32720, 16383, 16376, -1024, 0);
+		do fillBitMap(31, -32720, 8191, 16320, -1024, 0);
+		do fillBitMap(32, -16336, 8191, 7680, -1024, 0);
+		do fillBitMap(33, -16336, 8191, 6144, -1024, 0);
+		do fillBitMap(34, -16336, 4095, 8192, 31744, 0);
+		do fillBitMap(35, -16352, 4095, -4096, 32257, 0);
+		do fillBitMap(36, -16192, 4095, -4096, 32263, 0);
+		do fillBitMap(37, -14400, 2047, -4096, 32319, 0);
+		do fillBitMap(38, -8320, 2047, -2048, 32511, 0);
+		do fillBitMap(39, 16256, 2047, -2048, 12543, 0);
+		do fillBitMap(40, 16256, 1016, -1024, 255, 0);
+		do fillBitMap(41, 16128, 960, -1024, 127, 0);
+		do fillBitMap(42, 16128, 512, -512, 127, 0);
+		do fillBitMap(43, 16128, 1024, -512, 63, 0);
+		do fillBitMap(44, 15872, 15872, -256, 63, 0);
+		do fillBitMap(45, 15872, -512, -255, 31, 0);
+		do fillBitMap(46, 31744, -512, -121, 15, 0);
+		do fillBitMap(47, 31744, -512, -1, 15, 0);
+		do fillBitMap(48, 30720, -256, -449, 7, 0);
+		do fillBitMap(49, -2048, -256, -4065, 3, 0);
+		do fillBitMap(50, -28672, -256, -16369, 1, 0);
+		do fillBitMap(51, 8192, -254, 7, 1, 0);
+		do fillBitMap(52, 0, -242, -32761, 15, 0);
+		do fillBitMap(53, 0, -4, -16381, 31, 0);
+		do fillBitMap(54, 0, -904, -8191, 7, 0);
+		do fillBitMap(55, 0, -8072, -2048, 3, 0);
+		do fillBitMap(56, 0, -16288, -512, 0, 0);
+		do fillBitMap(57, 0, -8128, 16131, 0, 0);
+		do fillBitMap(58, 0, -1024, 4079, 0, 0);
+		do fillBitMap(59, 0, 0, 0, 0, 0);
+
+		return this;
+	}
+
+	method void fillBitMap(int row, int a, int b, int c, int d, int e) {
+		var int index;
+		let index = row * 5;
+		let bitMap[index] = a;
+		let bitMap[index + 1] = b;
+		let bitMap[index + 2] = c;
+		let bitMap[index + 3] = d;
+		let bitMap[index + 4] = e;
+
+		return;
+	}
+
+	method Array getBitMap() {
+		return bitMap;
+	}
+}

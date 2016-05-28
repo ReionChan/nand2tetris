@@ -1,0 +1,153 @@
+function Shadow8.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 40
+call Array.new 1
+pop this 0
+push pointer 0
+push constant 0
+push constant 0
+push constant 32767
+neg
+push constant 1
+sub
+push constant 21846
+neg
+push constant 2
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 1
+push constant 0
+push constant 21504
+push constant 21845
+push constant 85
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 2
+push constant 0
+push constant 21888
+neg
+push constant 21846
+neg
+push constant 682
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 3
+push constant 0
+push constant 21840
+push constant 21845
+push constant 5461
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 4
+push constant 0
+push constant 21848
+neg
+push constant 21846
+neg
+push constant 10922
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 5
+push constant 0
+push constant 21840
+push constant 21845
+push constant 5461
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 6
+push constant 0
+push constant 21856
+neg
+push constant 21846
+neg
+push constant 2730
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 7
+push constant 0
+push constant 21824
+push constant 21845
+push constant 1365
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 8
+push constant 0
+push constant 22528
+neg
+push constant 21846
+neg
+push constant 170
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 9
+push constant 0
+push constant 0
+push constant 21845
+push constant 1
+call Shadow8.fillBitMap 6
+pop temp 0
+push pointer 0
+return
+function Shadow8.fillBitMap 1
+push argument 0
+pop pointer 0
+push argument 1
+push constant 4
+call Math.multiply 2
+pop local 0
+push local 0
+push this 0
+add
+push argument 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+push this 0
+add
+push argument 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 2
+add
+push this 0
+add
+push argument 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 3
+add
+push this 0
+add
+push argument 5
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Shadow8.getBitMap 0
+push argument 0
+pop pointer 0
+push this 0
+return

@@ -1,0 +1,151 @@
+function Shadow7.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 40
+call Array.new 1
+pop this 0
+push pointer 0
+push constant 0
+push constant 0
+push constant 24576
+neg
+push constant 21846
+neg
+push constant 0
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 1
+push constant 0
+push constant 21760
+push constant 21845
+push constant 21
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 2
+push constant 0
+push constant 21856
+neg
+push constant 21846
+neg
+push constant 170
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 3
+push constant 0
+push constant 21844
+push constant 21845
+push constant 1365
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 4
+push constant 0
+push constant 21846
+neg
+push constant 21846
+neg
+push constant 2730
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 5
+push constant 0
+push constant 21844
+push constant 21845
+push constant 1365
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 6
+push constant 0
+push constant 21848
+neg
+push constant 21846
+neg
+push constant 682
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 7
+push constant 0
+push constant 21840
+push constant 21845
+push constant 341
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 8
+push constant 0
+push constant 22016
+neg
+push constant 21846
+neg
+push constant 42
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+push constant 9
+push constant 0
+push constant 16384
+push constant 21845
+push constant 0
+call Shadow7.fillBitMap 6
+pop temp 0
+push pointer 0
+return
+function Shadow7.fillBitMap 1
+push argument 0
+pop pointer 0
+push argument 1
+push constant 4
+call Math.multiply 2
+pop local 0
+push local 0
+push this 0
+add
+push argument 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+push this 0
+add
+push argument 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 2
+add
+push this 0
+add
+push argument 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 3
+add
+push this 0
+add
+push argument 5
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Shadow7.getBitMap 0
+push argument 0
+pop pointer 0
+push this 0
+return

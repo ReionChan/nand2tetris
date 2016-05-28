@@ -1,0 +1,11 @@
+class Main {
+
+	function void main() {
+		var RollingBall rb;
+
+		let rb = RollingBall.new();
+		do rb.rolling();
+		do rb.dispose();
+		return;
+	}
+}

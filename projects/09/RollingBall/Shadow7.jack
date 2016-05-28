@@ -1,0 +1,35 @@
+class Shadow7 {
+	field Array bitMap;
+
+	constructor Shadow7 new() {
+		let bitMap = Array.new(40);
+
+		do fillBitMap(0, 0, -24576, -21846, 0);
+		do fillBitMap(1, 0, 21760, 21845, 21);
+		do fillBitMap(2, 0, -21856, -21846, 170);
+		do fillBitMap(3, 0, 21844, 21845, 1365);
+		do fillBitMap(4, 0, -21846, -21846, 2730);
+		do fillBitMap(5, 0, 21844, 21845, 1365);
+		do fillBitMap(6, 0, -21848, -21846, 682);
+		do fillBitMap(7, 0, 21840, 21845, 341);
+		do fillBitMap(8, 0, -22016, -21846, 42);
+		do fillBitMap(9, 0, 16384, 21845, 0);
+
+		return this;
+	}
+
+	method void fillBitMap(int row, int a, int b, int c, int d) {
+		var int index;
+		let index = row * 4;
+		let bitMap[index] = a;
+		let bitMap[index + 1] = b;
+		let bitMap[index + 2] = c;
+		let bitMap[index + 3] = d;
+
+		return;
+	}
+
+	method Array getBitMap() {
+		return bitMap;
+	}
+}

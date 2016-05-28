@@ -1,0 +1,264 @@
+class RollingBall {
+	
+	static int SCREEN_START, SCREEN_END;
+
+	field Array posMaps, negMaps, sPosMaps, sNegMaps;
+
+	function void init() {
+		let SCREEN_START = 16384;
+		let SCREEN_END = 24576;
+		return;
+	}
+	
+	constructor RollingBall new() {
+
+		var Ball1 b1;
+		var Ball2 b2;
+		var Ball3 b3;
+		var Ball4 b4;
+		var Ball5 b5;
+		var Ball6 b6;
+		var Ball7 b7;
+		var Ball8 b8;
+
+		var Shadow1 s1;
+		var Shadow2 s2;
+		var Shadow3 s3;
+		var Shadow4 s4;
+		var Shadow5 s5;
+		var Shadow6 s6;
+		var Shadow7 s7;
+		var Shadow8 s8;
+
+		do RollingBall.init();
+		
+		let b1 = Ball1.new();
+		let b2 = Ball2.new();
+		let b3 = Ball3.new();
+		let b4 = Ball4.new();
+		let b5 = Ball5.new();
+		let b6 = Ball6.new();
+		let b7 = Ball7.new();
+		let b8 = Ball8.new();
+
+		let s1 = Shadow1.new();
+		let s2 = Shadow2.new();
+		let s3 = Shadow3.new();
+		let s4 = Shadow4.new();
+		let s5 = Shadow5.new();
+		let s6 = Shadow6.new();
+		let s7 = Shadow7.new();
+		let s8 = Shadow8.new();
+
+		let posMaps = Array.new(8);
+		let negMaps = Array.new(8);
+		let sPosMaps = Array.new(8);
+		let sNegMaps = Array.new(8);
+
+		let posMaps[0] = b1.getBitMap();
+		let posMaps[1] = b2.getBitMap(); 
+		let posMaps[2] = b3.getBitMap(); 
+		let posMaps[3] = b4.getBitMap(); 
+		let posMaps[4] = b5.getBitMap(); 
+		let posMaps[5] = b6.getBitMap(); 
+		let posMaps[6] = b7.getBitMap(); 
+		let posMaps[7] = b8.getBitMap();
+
+		let negMaps[0] = posMaps[7];
+		let negMaps[1] = posMaps[6];
+		let negMaps[2] = posMaps[5];
+		let negMaps[3] = posMaps[4];
+		let negMaps[4] = posMaps[3];
+		let negMaps[5] = posMaps[2];
+		let negMaps[6] = posMaps[1];
+		let negMaps[7] = posMaps[0];
+
+		let sPosMaps[0] = s1.getBitMap();
+		let sPosMaps[1] = s2.getBitMap(); 
+		let sPosMaps[2] = s3.getBitMap(); 
+		let sPosMaps[3] = s4.getBitMap(); 
+		let sPosMaps[4] = s5.getBitMap(); 
+		let sPosMaps[5] = s6.getBitMap(); 
+		let sPosMaps[6] = s7.getBitMap(); 
+		let sPosMaps[7] = s8.getBitMap();
+
+		let sNegMaps[0] = sPosMaps[7];
+		let sNegMaps[1] = sPosMaps[6];
+		let sNegMaps[2] = sPosMaps[5];
+		let sNegMaps[3] = sPosMaps[4];
+		let sNegMaps[4] = sPosMaps[3];
+		let sNegMaps[5] = sPosMaps[2];
+		let sNegMaps[6] = sPosMaps[1];
+		let sNegMaps[7] = sPosMaps[0];
+
+		return this;
+	}
+
+	method void rolling() {
+		var Array ballMaps, shadowMaps;
+		var int x, y, index;
+		var bool isDown, isRight;
+		var String hi;
+
+		let ballMaps = posMaps;
+		let shadowMaps = sPosMaps;
+		let x = 0;
+		let y = 6;
+		let index = 0 ;
+		let isDown = true;
+		let isRight = true;
+		let hi = " Welcome to Reion Chan's GitHub! ";
+
+		while(x < 28) {
+			// ****************************************** CLEAR PRE FRAME
+			if (isDown) {
+				if (y > 6) {
+					do clearPreBall(x, y - 3, true);
+				}
+			} else {
+				if (y > 5) {
+					do clearPreBall(x, y, false);
+				}
+			}
+			
+			// ****************************************** DRAW CURRENT FRAME
+			do drawBall(x, y, ballMaps[index]);
+			do drawShadow(x, 212, shadowMaps[index]);
+
+			do Output.moveCursor(22, x);
+			do Output.printString(hi);
+			do Output.moveCursor(0, 0);
+
+			if (isDown) {
+				let y = y + 3;
+			} else {
+				let y = y - 3;
+			}
+			
+			// ****************************************** NEXT INDEX OF BITMAPS
+			let index = index + 1;
+			if (isRight) {
+				if (index = 8) {
+					let x = x + 1;
+					let index = 0;
+				}
+			} else {
+				if (index = 8) {
+					let x = x - 1;
+					let index = 0;
+				}
+			}
+
+			// ****************************************** SET MOVE DIRECTION
+			if (y > 150) {
+				let y = 150;
+				let isDown = false;
+			}
+			if (y < 6) {
+				let y = 6;
+				let isDown = true;
+			}
+
+			// ****************************************** SET ROTATE DIRECTION
+			if (x > 27) {
+				let x = 27;
+				let ballMaps = negMaps;
+				let shadowMaps = sNegMaps;
+				let isRight = false;
+			}
+			if (x < 0) {
+				let x = 0;
+				let ballMaps = posMaps;
+				let shadowMaps = sPosMaps;
+				let isRight = true;
+			}
+		}
+		
+		return;
+	}
+
+	/*
+	 * DRAW BALL BITMAP BY POINT.
+	 * x [0, 27] 
+	 * y [0, 150]
+	 */
+	method void drawBall(int x, int y, Array bitMap) {
+		var int row, col, index, address, addIndex;
+		let row = 0;
+		let col = 0;
+		let address = 32 * y + x + SCREEN_START;
+
+		while(row < 60) {
+			let addIndex = 32 * row + address;
+			let index = 5 * row;
+			while(col < 5) {
+				do Memory.poke(addIndex + col, bitMap[index + col]);
+				let col = col + 1;
+			}
+			let col = 0;
+			let row = row + 1;
+		}
+
+		return;
+	}
+
+	/*
+	 * DRAW SHADOW BITMAP BY POINT.
+	 * x [0, 27] 
+	 * y [212, 212]
+	 */
+	method void drawShadow(int x, int y, Array bitMap) {
+		var int row, col, index, address, addIndex;
+		let row = 0;
+		let col = 0;
+		let address = 23168 + x;
+
+		while(row < 10) {
+			let addIndex = 32 * row + address;
+			let index = 4 * row;
+			while(col < 4) {
+				do Memory.poke(addIndex + col, bitMap[index + col]);
+				let col = col + 1;
+			}
+			let col = 0;
+			let row = row + 1;
+		}
+
+		return;
+	}
+
+	/*
+	 * CLEAR PRE-FRAME BALL.
+	 * x [0, 27] 
+	 * y [0, 150]
+	 * clearUp TO CLEAR TOP OR BOTTOM OF THE BALL
+	 */
+	method void clearPreBall(int x, int y, bool clearUp) {
+		var int row, col, index, address, addIndex;
+		let row = 0;
+		let col = 0;
+		let address = 32 * y + x + SCREEN_START;
+
+		while(row < 3) {
+			if (clearUp) {
+				let addIndex = 32 * row + address;
+			} else {
+				let addIndex = 32 * (row + 60) + address;
+			}
+			
+			let index = 5 * row;
+			while(col < 5) {
+				do Memory.poke(addIndex + col, 0);
+				let col = col + 1;
+			}
+			let col = 0;
+			let row = row + 1;
+		}
+		return;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+}

@@ -1,0 +1,11 @@
+function Main.main 1
+call RollingBall.new 0
+pop local 0
+push local 0
+call RollingBall.rolling 1
+pop temp 0
+push local 0
+call RollingBall.dispose 1
+pop temp 0
+push constant 0
+return

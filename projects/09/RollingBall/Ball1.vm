@@ -1,0 +1,701 @@
+function Ball1.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 300
+call Array.new 1
+pop this 0
+push pointer 0
+push constant 0
+push constant 0
+push constant 0
+push constant 0
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 1
+push constant 0
+push constant 6272
+neg
+push constant 255
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 2
+push constant 0
+push constant 32272
+neg
+push constant 1031
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 3
+push constant 0
+push constant 124
+push constant 7170
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 4
+push constant 0
+push constant 31
+push constant 15887
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 5
+push constant 32767
+neg
+push constant 1
+sub
+push constant 32761
+neg
+push constant 15999
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 6
+push constant 16384
+neg
+push constant 8189
+neg
+push constant 32255
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 7
+push constant 8192
+neg
+push constant 4095
+neg
+push constant 7937
+neg
+push constant 8
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 8
+push constant 32767
+neg
+push constant 1
+sub
+push constant 2048
+neg
+push constant 32513
+neg
+push constant 16
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 9
+push constant 32767
+neg
+push constant 1
+sub
+push constant 2041
+neg
+push constant 127
+push constant 35
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 10
+push constant 16384
+neg
+push constant 961
+neg
+push constant 127
+push constant 126
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 11
+push constant 8192
+neg
+push constant 257
+neg
+push constant 127
+push constant 62
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 12
+push constant 4096
+neg
+push constant 1793
+neg
+push constant 63
+push constant 126
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 13
+push constant 2048
+neg
+push constant 16257
+neg
+push constant 63
+push constant 126
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 14
+push constant 2048
+neg
+push constant 127
+push constant 63
+push constant 254
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 15
+push constant 1024
+neg
+push constant 63
+push constant 24
+push constant 254
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 16
+push constant 1024
+neg
+push constant 63
+push constant 32
+push constant 254
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 17
+push constant 512
+neg
+push constant 31
+push constant 480
+push constant 508
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 18
+push constant 512
+neg
+push constant 31
+push constant 4080
+push constant 508
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 19
+push constant 256
+neg
+push constant 15
+push constant 16368
+push constant 1022
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 20
+push constant 232
+neg
+push constant 15
+push constant 16
+neg
+push constant 1023
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 21
+push constant 136
+neg
+push constant 7
+push constant 8
+neg
+push constant 1009
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 22
+push constant 1928
+neg
+push constant 7
+push constant 8
+neg
+push constant 961
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 23
+push constant 16264
+neg
+push constant 3
+push constant 4
+neg
+push constant 513
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 24
+push constant 60
+push constant 2
+push constant 4
+neg
+push constant 3073
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 25
+push constant 60
+push constant 4
+push constant 4
+neg
+push constant 15361
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 26
+push constant 60
+push constant 62
+push constant 2
+neg
+push constant 14337
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 27
+push constant 60
+push constant 510
+push constant 2
+neg
+push constant 14336
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 28
+push constant 60
+push constant 2046
+push constant 2
+neg
+push constant 14336
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 29
+push constant 60
+push constant 16383
+push constant 1
+neg
+push constant 14336
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 30
+push constant 60
+push constant 1
+neg
+push constant 2
+neg
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 31
+push constant 28
+push constant 32767
+push constant 32752
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 32
+push constant 28
+push constant 32767
+push constant 32640
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 33
+push constant 32740
+neg
+push constant 32767
+push constant 32256
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 34
+push constant 32740
+neg
+push constant 16383
+push constant 28672
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 35
+push constant 32712
+neg
+push constant 16383
+push constant 16384
+push constant 15360
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 36
+push constant 32767
+neg
+push constant 1
+sub
+push constant 16383
+push constant 16384
+neg
+push constant 7681
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 37
+push constant 32320
+neg
+push constant 8191
+push constant 8192
+neg
+push constant 7695
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 38
+push constant 30784
+neg
+push constant 8191
+push constant 8192
+neg
+push constant 7807
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 39
+push constant 16448
+neg
+push constant 8191
+push constant 4096
+neg
+push constant 7423
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 40
+push constant 32704
+push constant 4094
+push constant 4096
+neg
+push constant 255
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 41
+push constant 16256
+push constant 4080
+push constant 4096
+neg
+push constant 255
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 42
+push constant 16256
+push constant 3968
+push constant 2048
+neg
+push constant 127
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 43
+push constant 32640
+push constant 1536
+push constant 1024
+neg
+push constant 127
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 44
+push constant 32512
+push constant 2048
+push constant 1024
+neg
+push constant 63
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 45
+push constant 32512
+push constant 31744
+push constant 512
+neg
+push constant 31
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 46
+push constant 32256
+push constant 1024
+neg
+push constant 511
+neg
+push constant 31
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 47
+push constant 32256
+push constant 1024
+neg
+push constant 241
+neg
+push constant 15
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 48
+push constant 31744
+push constant 512
+neg
+push constant 1
+neg
+push constant 7
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 49
+push constant 32256
+push constant 512
+neg
+push constant 897
+neg
+push constant 3
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 50
+push constant 25600
+push constant 512
+neg
+push constant 4033
+neg
+push constant 3
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 51
+push constant 2048
+push constant 256
+neg
+push constant 32737
+neg
+push constant 1
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 52
+push constant 4096
+push constant 253
+neg
+push constant 15
+push constant 3
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 53
+push constant 8192
+push constant 98
+neg
+push constant 16377
+neg
+push constant 7
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 54
+push constant 0
+push constant 130
+neg
+push constant 8189
+neg
+push constant 3
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 55
+push constant 0
+push constant 1924
+neg
+push constant 4095
+neg
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 56
+push constant 0
+push constant 16440
+push constant 15360
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 57
+push constant 0
+push constant 16336
+neg
+push constant 3840
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 58
+push constant 0
+push constant 2048
+neg
+push constant 999
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+push constant 59
+push constant 0
+push constant 24576
+push constant 0
+push constant 0
+push constant 0
+call Ball1.fillBitMap 7
+pop temp 0
+push pointer 0
+return
+function Ball1.fillBitMap 1
+push argument 0
+pop pointer 0
+push argument 1
+push constant 5
+call Math.multiply 2
+pop local 0
+push local 0
+push this 0
+add
+push argument 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+push this 0
+add
+push argument 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 2
+add
+push this 0
+add
+push argument 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 3
+add
+push this 0
+add
+push argument 5
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 4
+add
+push this 0
+add
+push argument 6
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Ball1.getBitMap 0
+push argument 0
+pop pointer 0
+push this 0
+return
