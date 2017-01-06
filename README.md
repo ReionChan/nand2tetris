@@ -383,6 +383,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 * `11.3.4节` `Page-240`
 	writeFunction中参数`nArgs(int)` 应改为 `nLocals(int)`
 
+[`返回目录`](#content-table)
 ### [Copyright](id:copyright) 
 （版权）
 
@@ -393,6 +394,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 未遵照许可或私自盗用此程序及文件将被诅咒一生只写漏洞百出的程序。
 
 
+[`返回目录`](#content-table)
 ### [Licence](id:licence) 
 （许可证）
 
@@ -402,6 +404,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 本程序包含一个GUN 通用公共授权[GNU GPLv3](./LICENSE)。如果没有，请访问<http://www.gnu.org/licenses/>
 
+[`返回目录`](#content-table)
 	
 [^1]: 周维、宋磊、陈曦翻译，电子工业出版社出版
 
