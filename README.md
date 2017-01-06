@@ -2,7 +2,9 @@
 
  > 之前一直有想了解现代计算机是如何构建起来的，偶然间看到[`Shimon Schocken`](http://shimonschocken.com/)在[TED](https://www.youtube.com/watch?v=iE7YRHxwoDs)的一期演讲，介绍其为学生开发了一套逐步构建现代计算机的课程，该课程让大家了解现代计算机如何从基本门电路开始慢慢被构建。全书以项目为单元，逐一完成这些项目，即可构造出一个16位的Hack计算机硬件，在此硬件之上，开发出汇编编译器、堆栈式虚拟机，针对虚拟机设计出高级编程语言Jack，同时开发出相应的Jack语言编译器。真是相见恨晚，细读的同时根据规范采用Java语言完成了各个章节项目，故而有了此GitHub上的项目代码。
  
-### [Content Table](id:content-table)（目录）
+### [Content Table](id:content-table)
+（目录）
+
 * [Resource （资源）](#resource)
 * [Projects（项目）](#projects)
 	* 典型的硬件体系 （第一章 ~ 第五章）
@@ -21,7 +23,8 @@
 * [Copyright （版权）](#copyright)
 * [Licence （许可证）](#licence)
 
-### [Resource](id:resource)（资源）
+### [Resource](id:resource)
+（资源）
 
 * 原书：[The Elements of Computing Systems](http://www.amazon.com/Elements-Computing-Systems-Building-Principles/dp/0262640686/ref=ed_oe_p "购买") [^2]
 
@@ -53,7 +56,8 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 详情请访问：<http://http://www.nand2tetris.org/software.php>
 
 [`返回目录`](#content-table)
-### [Projects](id:projects) （项目）
+### [Projects](id:projects) 
+（项目）
 #### [[Project 01](https://github.com/ReionChan/nand2tetris/tree/master/projects/01)](id:project-01)
 * 基本逻辑门 (1位)
 	* [Not 非门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Not.hdl)
@@ -364,7 +368,9 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 
 [`返回目录`](#content-table)
-### [Errata](id:errata) （中文版勘误）
+### [Errata](id:errata) 
+（中文版勘误）
+
 * `4.2.3节` `Page-67` 
 	图4.3中，表格右边的标题应为`（当a=1）comp助记符`
 	
@@ -377,7 +383,9 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 * `11.3.4节` `Page-240`
 	writeFunction中参数`nArgs(int)` 应改为 `nLocals(int)`
 
-### [Copyright](id:copyright) （版权）
+### [Copyright](id:copyright) 
+（版权）
+
 所有程序及文件（Nand2Tetris所包含的原始文件除外）版权归属Reion Chan。
 
 如你使用本程序及文件请注明作者(Reion Chan)，详细参见[GNU GPLv3](./LICENSE)
@@ -385,7 +393,9 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 未遵照许可或私自盗用此程序及文件将被诅咒一生只写漏洞百出的程序。
 
 
-### [Licence](id:licence) （许可证）
+### [Licence](id:licence) 
+（许可证）
+
 本程序为自由软件：你可以在遵照[GNU GPLv3](./LICENSE)（及后续版本）条款的前提下，转发、修改本程序。
 
 本程序旨在学习、交流，对本程序不承担任何担保责任，详细参见[GNU GPLv3](./LICENSE)许可。
