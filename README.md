@@ -266,10 +266,10 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 
 * [Rolling Ball](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/RollingBall) 滚球程序 `Author: Reion Chan`
+	
 	![RollingBall_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/RollingBall/RollingBall.gif?raw=true =450x "RollingBall_demo")
 	
-	[![YouTube](res/youtube.png =48x "Watch the YouTube Video")](https://www.youtube.com/watch?v=demDX8JKg0c)<br>
-	[<font size="1">Watch Demo</font>](https://www.youtube.com/watch?v=demDX8JKg0c)
+	[![YouTube](https://github.com/ReionChan/nand2tetris/blob/master/res/youtube.png?raw=true =48x "Watch This Demo 查看此视频")](https://www.youtube.com/watch?v=demDX8JKg0c) [Watch Demo in YouTube 查看此视频](https://www.youtube.com/watch?v=demDX8JKg0c)
 
 * [Square](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Square) 官方样例程序 `Author: Nand2Tetris.org`
 
