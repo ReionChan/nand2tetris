@@ -258,7 +258,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 * [Hello](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/Hello) 打招呼程序 `Author: Reion Chan`
 
-	![Hello_demo](https://github.com/ReionChan/nand2tetris/blob/master/projects/09/Hello/Hello.gif =450x "Hello_demo")
+	![Hello_demo](https://raw.githubusercontent.com/ReionChan/nand2tetris/master/projects/09/RollingBall/RollingBall.gif =450x "Hello_demo")
 
 * [Countdown Timer](https://github.com/ReionChan/nand2tetris/tree/master/projects/09/CountdownTimer) 倒计时程序 `Author: Reion Chan`
 
