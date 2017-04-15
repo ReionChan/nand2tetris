@@ -58,7 +58,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 [`返回目录`](#content-table)
 ### [Projects](id:projects) 
 （项目）
-#### [[Project 01](https://github.com/ReionChan/nand2tetris/tree/master/projects/01)](id:project-01)
+#### [Project 01](https://github.com/ReionChan/nand2tetris/tree/master/projects/01)
 * 基本逻辑门 (1位)
 	* [Not 非门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Not.hdl)
 	
