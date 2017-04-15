@@ -73,7 +73,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	* [DMux 解复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/DMux.hdl) [⁴](#remarks)
 	
 	
-* 多位[⁵](#remarks) 基本门 (16位)
+* 多位 [⁵](#remarks) 基本门 (16位)
 	* [Not16 16-位非门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Not16.hdl)
 	
 	* [And16 16-位与门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/And16.hdl)
@@ -83,7 +83,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 	* [Mux16 16-位2路复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Mux16.hdl)
 	
 	
-* 多通道[⁶](#remarks) 逻辑门
+* 多通道 [⁶](#remarks) 逻辑门
 	* [Or8Way 8路或门](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Or8Way.hdl)
 	
 	* [Mux4Way16 4路16-位复用器](https://github.com/ReionChan/nand2tetris/blob/master/projects/01/Mux4Way16.hdl)
@@ -408,7 +408,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 ### [Remarks](id:remarks)
 	
-1: 周维、宋磊、陈曦翻译，电子工业出版社出版 [↩︎](#计算机系统要素-从零开始构建现代计算机¹)
+1: 周维、宋磊、陈曦翻译，电子工业出版社出版 [↩︎](#计算机系统要素-从零开始构建现代计算机)
 
 2: MIT Press, By [`Noam Nisan`](http://www.cs.huji.ac.il/~noam/) and [`Shimon Schocken`](http://shimonschocken.com/) [↩︎](#resource)
 
