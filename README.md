@@ -8,7 +8,7 @@ nand2tetris
 
 This repo contains 12 projects, each of which is the post-lesson assignment in the book mentioned above. For more information on each project, please click on the following link: 
   
-[English](http://reionchan.github.io/nand2tetris/)
+[English](https://reionchan.github.io/nand2tetris/index_en.html)
 
 ----
 
