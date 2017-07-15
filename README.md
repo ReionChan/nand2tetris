@@ -1,4 +1,4 @@
-[![Analytics](https://ga-beacon.appspot.com/nand2tetris/UA-102629055-1/readme)](https://github.com/ReionChan/nand2tetris)
+[![Analytics](https://ga-beacon.appspot.com/UA-102629055-1/nand2tetris/readme)](https://github.com/ReionChan/nand2tetris)
 
 ## Language
 
