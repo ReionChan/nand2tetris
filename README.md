@@ -1,4 +1,4 @@
-![ ](https://ga-beacon.appspot.com/UA-102629055-1/nand2tetris/readme?pixel)]
+![ ](https://ga-beacon.appspot.com/UA-102629055-1/nand2tetris/readme?pixel)
 
 ## Language
 
