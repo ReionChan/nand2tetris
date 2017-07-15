@@ -1,4 +1,4 @@
-![ ](https://ga-beacon.appspot.com/UA-102629055-1/nand2tetris/index?pixel) 
+![](https://ga-beacon.appspot.com/UA-102629055-1/nand2tetris/index?pixel)[![](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://raw.githubusercontent.com/ReionChan/nand2tetris/master/LICENSE) [![](https://img.shields.io/github/forks/ReionChan/nand2tetris.svg?style=social&label=Fork)](https://github.com/ReionChan/nand2tetris/network/members) [![](https://img.shields.io/github/stars/ReionChan/nand2tetris.svg?style=social&label=Star)](https://github.com/ReionChan/nand2tetris/stargazers)
   
 ## 《计算机系统要素-从零开始构建现代计算机》[^1]
 
@@ -23,7 +23,7 @@
 		* 高级语言/应用程序	[`Project 09`](#project-09)
 * [Errata （中文版勘误）](#errata)
 * [Copyright （版权）](#copyright)
-* [Licence （许可证）](#licence)
+* [License （许可证）](#license)
 
 ### [Resource](id:resource)
 （资源）
@@ -396,7 +396,7 @@ VM仿真器 | 仿真书中描述的虚拟机的运作，用来运行测试使用
 
 
 [`返回目录`](#content-table)
-### [Licence](id:licence) 
+### [License](id:license) 
 （许可证）
 
 本程序为自由软件：你可以在遵照[GNU GPLv3](./LICENSE)（及后续版本）条款的前提下，转发、修改本程序。
