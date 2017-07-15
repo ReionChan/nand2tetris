@@ -12,7 +12,7 @@ This repo contains 12 projects, each of which is the post-lesson assignment in t
 
 ----
 
-此代码库包含12个项目，每个项目都来源于上面提及的这部书的每个章节的课后练习。
+此代码库包含12个项目，每个项目都来源于上面提及的这部书的每个章节的课后练习。  
 请点击下面链接来获取每个项目的详细信息：
 
 [中文](http://reionchan.github.io/nand2tetris/)
